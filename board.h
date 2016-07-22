@@ -1,27 +1,28 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
-#include "board.h"
 #include <vector>
+#include <memory>
 #include "chesspiece.h"
 
 class Board {
-  std::vector<std::vector<ChessPiece>> theChessBoard;  // The actual Board.
-  int bScore;
-  int wScore;
-  std::std::vector<std::string> history;
+  vector <std::shared_ptr<vector<std::shared_ptr<ChessPiece>>>> theChessBoard;  // The actual Board.
+  double bScore;//up  = 1
+  double wScore;//down  = 0
+  //std::std::vector<std::string> history;
 public:
   Board();
   ~Board();
 
+  void scoreUpdate(int color, double score);
+  bool isEmpty(int x, int y);
   bool isCheckmate();
   bool isCheck();
   void clearBoard();
   void initBoard();
-  void switchPlayer();
-  void resign();
+  //void resign(); go to controller
   int getBscore();
   int getWscore();
-  std::vector<std::string> *getHistory();
+  //std::vector<std::string> *getHistory();
 };
 
 #endif
