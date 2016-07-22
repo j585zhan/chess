@@ -1,22 +1,20 @@
 #ifndef __CONTROLLER_H__
 #define __CONTROLLER_H__
 #include <iostream>
-#include "controller.h"
+#include <memory>
 
 class Controller {
-	Board *board;
-	View *view;
+	std::share_ptr<Board> board;
+	std::share_ptr<View> view;
+	bool validPlayer(std::string player);
+	void setup();
+	void game(std::string player1, std::string player2);
+	void notify();
+	std::string getPromotion();
 public:
 	Controller();
 	~Controller();
-
 	void play();
-	void game();
-	void notify();
-	std::string getPromotion();
-	void setup();
-	bool isCheck();
-	bool isCheckmate();
 };
 
 #endif
