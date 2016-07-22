@@ -9,19 +9,26 @@ class Board {
   double bScore;//up  = 1
   double wScore;//down  = 0
   //std::std::vector<std::string> history;
+  
 public:
   Board();
   ~Board();
-
+  bool wturn;
   void scoreUpdate(int color, double score);
-  bool isEmpty(int x, int y);
+  bool isEmpty(Coor c);
   bool isCheckmate();
   bool isCheck();
   void clearBoard();
   void initBoard();
-  //void resign(); go to controller
+  void resign(); // we need it here
+  void placePiece(char piece, Coor pos);
+  void removePiece(Coor pos);
+  // makemove(start, dest) return "empty" if no piece at start, return invalid if
+  //   the move is invlid
+  std::string makeMove(Coor start, Coor dest);
   int getBscore();
   int getWscore();
+  bool isWTurn();
   //std::vector<std::string> *getHistory();
 };
 
