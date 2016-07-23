@@ -1,7 +1,12 @@
 #include "textdisplay.h"
-#include "board.h"
+#include <iostream>
 
 using namespace std;
+
+struct Coor {
+	int x;
+	int y;
+};
 
 const int size = 8;
 
@@ -28,7 +33,7 @@ void TextDisplay::notify(char piece, Coor coor) {
 
 void TextDisplay::print() {
 	for (int i = size - 1; i >= 0; --i) {
-		cout << i + 1<< ' ';
+		cout << i + 1 << ' ';
 		for (int j = 0; j < size; ++j) {
 			cout << theDisplay[i][j];
 		}

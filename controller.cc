@@ -26,7 +26,7 @@ bool Controller::validPlayer(const string &player) {
 
 //kqbrnp
 
-bool validPiece(const string &piece) {
+bool Controller::validPiece(const string &piece) {
 	string s = toupper(piece);
 	if (s == "K" || s == "Q" || s == "B" || s == "R" || s == "N" || s == "P") {
 		return true;
@@ -34,7 +34,7 @@ bool validPiece(const string &piece) {
 	return false;
 }
 
-bool validPos(const string &pos) {
+bool Controller::validPos(const string &pos) {
 	if (pos.size() != 2) return false;
 	if (pos[0] >= 'a' && pos[0] <= 'h') {
 		if (pos[1] >= '1' && pos[1] <= '8') {
@@ -45,21 +45,21 @@ bool validPos(const string &pos) {
 	return false;
 }
 
-Coor toCoor(const string &pos) {
+Coor Controller::toCoor(const string &pos) {
 	int x = pos[0] - 'a' + 1;
 	int y = pos[1] - '1' + 1;
 	Coor c {x, y}
 	return c;
 }
 
-void setup() {
+void Controller::setup(istream &is) {
 	board->clearBoard();
 	string cmd;
-	while (cin >> cmd) {
+	while (is >> cmd) {
 		view->print();
 		if (cmd == "+") {
 			string piece, pos;
-			cin << piece << pos;
+			is << piece << pos;
 			if (validPiece(piece) && validPos(pos)) {
 				Coor c = toCoor(pos);
 				board->placePiece(piece[0], c);
@@ -69,19 +69,31 @@ void setup() {
 			}
 		} else if (cmd == "-") {
 			string pos;
-			cin << pos;
+			is << pos;
 			if (validPos(pos)) {
 				Coor c = toCoor(pos);
 				board->removePiece(c);
-				view->notify('*', c);
+				char emptyPosColor;
+				if (c.x % 2 == 0) {
+					if (c.y % 2 == 0) emptyPosColor = '_';
+					else emptyPosColor = ' ';
+				} else {
+					if (c.y % 2 == 0) emptyPosColor = ' ';
+					else emptyPosColor = '_';
+				}
+				view->notify(emptyPosColor, c);
 			} else {
 				cout << "Invalid - usage, check your coordinates" << endl;
 			}
 		} else if (cmd == "=") {
 			string color;
-			cin << color;
-			if (color == "black" || color == "white") {
-				
+			is << color;
+			if (color == "black"){
+				board->wturn = false;
+			} else if (color == "white") {
+				board->wturn = true;
+			} else {
+				cout << "Invalid color" << endl;
 			}
 		} else if (cmd == done) {
 			if (board->validBoard()) {
@@ -94,30 +106,9 @@ void setup() {
 	}
 }
 
-void Controller::play() {
-	string cmd;
-	while (cin >> cmd) {
-		if (cmd == "game") {
-			string player1, player2;
-			cin >> player1 >> player2;
-			if (validPlayer(player1) && validPlayer(player2)) {
-				board->setPlayer(player1, player2);
-				game();
-			}
-		} else if (cmd == "setup") {
-			setup();
-		} else if (cmd == "read") {
-			string filename;
-			cin >> filename;
-			ifstream ifs;
-			ifs.open(filename);
-			// need more, come back when i finish setup()
-		}
-	}
-}
-
 void Controller::game() {
 	board->initBoard();
+	view->print();
 	string cmd;
 	while (cin >> cmd) {
 		if (board->isCheckmate()) {
@@ -152,6 +143,7 @@ void Controller::game() {
 					cout << "Invalid move" << endl;
 					continue;
 				}
+				view->print();
 			} else {
 				cout << "Incorrect usage of move, check your coordinates again" << endl;
 			}
@@ -168,4 +160,26 @@ void Controller::game() {
 	cout << "Final Score:" << endl;
 	cout << "White: " << board->getWScore() << endl;
 	cout << "Black: " << board->getBScore() << endl;
+}
+
+void Controller::play() {
+	string cmd;
+	while (cin >> cmd) {
+		if (cmd == "game") {
+			string player1, player2;
+			cin >> player1 >> player2;
+			if (validPlayer(player1) && validPlayer(player2)) {
+				board->setPlayer(player1, player2);
+				game();
+			}
+		} else if (cmd == "setup") {
+			setup(cin);
+		} else if (cmd == "read") {
+			string filename;
+			cin >> filename;
+			ifstream ifs;
+			ifs.open(filename);
+			setup(ifs);
+		}
+	}
 }
