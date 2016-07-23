@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Board::Board() {
+Board::Board(Controller* controller):controller{controller} {
 	bScore = 0; 
 	wScore = 0;
 	wturn = true;
@@ -143,11 +143,15 @@ void Board::initBoard(){
 			} else {
 				cp = nullptr;
 			}
-
+			this.notifyView(cp.getType(), cp.getCoor());
 			theLine.emplace_back(cp);
 		}
 		theChessBoard.emplace_back(theLine);
 	}
+}
+
+void notifyView(char chess, Coor c) {
+	controller->notify(chess, c);
 }
 
 int Board::resign() {
@@ -181,13 +185,17 @@ void Board::removePiece(Coor pos) {
 }
 
 string Board::makeMove(Coor start, Coor dest) {
-	if (theChessBoard[start.x][start.y] == ) {
+	if (theChessBoard[start.x][start.y] == nullptr) {
 		return "empty";
 	}
 	vector<Coor> Arange = theChessBoard[start.x][start.y]->getAttackRange
 	vector<Coor> Mrange = theChessBoard[start.x][start.y]->getMoveRange
 	for (int i = 0; i < Arange.size(); i++) {
 		if (range[i].x == dest.x && range[i].y == dest.y) {
+			theChessBoard[dest.x][dest.y] = theChessBoard[start.x][start.y];
+			theChessBoard[start.x][start.y] = nullptr;
+			this.notifyView(theChessBoard[start.x][start.y].getType(), theChessBoard[start.x][start.y].getCoor());
+			this.notifyView(theChessBoard[dest.x][dest.y].getType(), theChessBoard[dest.x][dest.y].getCoor());
 			wturn = !wturn;
 			this.removePiece(range[i]);
 			return "";
@@ -196,6 +204,10 @@ string Board::makeMove(Coor start, Coor dest) {
 
 	for (int i = 0; i < Mrange.size(); i++) {
 		if (range[i].x == dest.x && range[i].y == dest.y) {
+			theChessBoard[dest.x][dest.y] = theChessBoard[start.x][start.y];
+			theChessBoard[start.x][start.y] = nullptr;
+			this.notifyView(theChessBoard[start.x][start.y].getType(), theChessBoard[start.x][start.y].getCoor());
+			this.notifyView(theChessBoard[dest.x][dest.y].getType(), theChessBoard[dest.x][dest.y].getCoor());
 			wturn = !wturn;
 			return "";
 		}

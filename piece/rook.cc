@@ -5,7 +5,7 @@
 using namespace std;
 
 Rook::Rook(int color, Coor coor, Board *b): color {color}, coor {coor}, b{b}{
-	type = "R";
+	type = 'R';
 }
 
 Rook::~Rook(){}
@@ -80,6 +80,6 @@ vector<Coor> Rook::getMoveRange() {
 	return moveRange;
 }
 
-string Rook::getType() {
+char Rook::getType() {
 	return type;
 }

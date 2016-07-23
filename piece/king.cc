@@ -5,7 +5,7 @@
 using namespace std;
 
 King::King(int color, Coor coor, Board *b): color {color}, coor {coor}, b{b}{
-	type = "K";
+	type = 'K';
 }
 
 King::~King(){}
@@ -90,6 +90,6 @@ vector<Coor> King::getMoveRange() {
 	return moveRange;
 }
 
-string King::getType() {
+char King::getType() {
 	return type;
 }

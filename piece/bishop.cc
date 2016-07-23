@@ -5,7 +5,7 @@
 using namespace std;
 
 Bishop::Bishop(int color, Coor coor, Board *b): color {color}, coor {coor}, b{b}{
-	type = "B";
+	type = 'B';
 }
 
 Bishop::~Bishop(){}
@@ -120,6 +120,6 @@ vector<Coor> Bishop::getMoveRange() {
 	return moveRange;
 }
 
-string Bishop::getType() {
+char Bishop::getType() {
 	return type;
 }

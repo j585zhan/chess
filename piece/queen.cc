@@ -5,7 +5,7 @@
 using namespace std;
 
 Queen::Queen(int color, Coor coor, Board *b): color {color}, coor {coor}, b{b}{
-	type = "Q";
+	type = 'Q';
 }
 
 Queen::~Queen(){}
@@ -176,6 +176,6 @@ vector<Coor> Queen::getMoveRange() {
 	return moveRange;
 }
 
-string Queen::getType() {
+char Queen::getType() {
 	return type;
 }

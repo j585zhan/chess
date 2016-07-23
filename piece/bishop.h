@@ -4,14 +4,14 @@
 #include "Chesspiece.h"
 
 class Bishop: public Chesspiece {
-  std::string type;
+  char type;
 public:
   Bishop(int color, Coor coor, Board *b);
   ~Bishop();
   void makeMove(Coor dest);
   vector<Coor> getAttackRange();
   vector<Coor> getMoveRange();
-  std::string getType();
+  char getType();
 };
 
 #endif

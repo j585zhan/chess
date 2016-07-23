@@ -5,7 +5,7 @@
 using namespace std;
 
 Pawn::Pawn(int color, Coor coor, Board *b): color {color}, coor {coor}, b{b}{
-	type = "P";
+	type = 'P';
 }
 
 Pawn::~Pawn(){}
@@ -69,6 +69,6 @@ vector<Coor> Pawn::getMoveRange() {
 	return moveRange;
 }
 
-string Pawn::getType() {
+char Pawn::getType() {
 	return type;
 }

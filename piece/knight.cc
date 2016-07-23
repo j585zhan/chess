@@ -5,7 +5,7 @@
 using namespace std;
 
 Knight::Knight(int color, Coor coor, Board *b): color {color}, coor {coor}, b{b}{
-	type = "N";
+	type = 'N';
 }
 
 Knight::~Knight(){}
@@ -91,6 +91,6 @@ vector<Coor> Knight::getMoveRange() {
 	return moveRange;
 }
 
-string Knight::getType() {
+char Knight::getType() {
 	return type;
 }
