@@ -15,6 +15,7 @@ class Controller {
 	bool validPiece(const std::string &piece);
 	bool validPos(const std::string &pos);
 	Coor toCoor(const std::string &pos);
+	void notifyView(const char piece, const Coor c);
 	void setup(istream &is);
 	void game(const std::string &player1, const std::string &player2);
 	std::string getPromotion();

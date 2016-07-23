@@ -52,6 +52,10 @@ Coor Controller::toCoor(const string &pos) {
 	return c;
 }
 
+void Controller::notifyView(const char piece, const Coor c) {
+	view->notifyView(piece, c);
+}
+
 void Controller::setup(istream &is) {
 	board->clearBoard();
 	string cmd;
@@ -63,7 +67,7 @@ void Controller::setup(istream &is) {
 			if (validPiece(piece) && validPos(pos)) {
 				Coor c = toCoor(pos);
 				board->placePiece(piece[0], c);
-				view->notify(piece[0], c); // notify() will place piece at pos 
+				notifyView(piece[0], c); // notifyView() will place piece at pos 
 			} else {
 				cout << "Invalid + usage" << endl;
 			}
@@ -81,7 +85,7 @@ void Controller::setup(istream &is) {
 					if (c.y % 2 == 0) emptyPosColor = ' ';
 					else emptyPosColor = '_';
 				}
-				view->notify(emptyPosColor, c);
+				notifyView(emptyPosColor, c);
 			} else {
 				cout << "Invalid - usage, check your coordinates" << endl;
 			}
