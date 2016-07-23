@@ -20,7 +20,7 @@ public:
   bool isCheck();
   void clearBoard();
   void initBoard();
-  void resign(); // we need it here
+  int resign(); // we need it here
   void placePiece(char piece, Coor pos);
   void removePiece(Coor pos);
   // makemove(start, dest) return "empty" if no piece at start, return invalid if
@@ -28,8 +28,7 @@ public:
   std::string makeMove(Coor start, Coor dest);
   int getBscore();
   int getWscore();
-  bool isWTurn();
-  //std::vector<std::string> *getHistory();
+    //std::vector<std::string> *getHistory();
 };
 
 #endif

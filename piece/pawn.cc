@@ -14,7 +14,7 @@ void Pawn::makeMove(Coor dest) {
 	coor = dest;
 }
 
-vector<Coor> getAttackRange() {
+vector<Coor> Pawn::getAttackRange() {
 	vector<Coor>attackRange;
 
 	if (color == 0) {

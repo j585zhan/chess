@@ -1,7 +1,6 @@
 #ifndef __KING_H__
 #define __KING_H__
 #include <vector>
-#include "board.h"
 #include "Chesspiece.h"
 
 class King: public Chesspiece {
@@ -13,8 +12,6 @@ public:
   vector<Coor> getAttackRange();
   vector<Coor> getMoveRange();
   std::string getType();
-  Coor getCoor();
-  int getColor();
 };
 
 #endif

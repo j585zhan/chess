@@ -1,7 +1,6 @@
 #ifndef __ROOK_H__
 #define __ROOK_H__
 #include <vector>
-#include "board.h"
 #include "Chesspiece.h"
 
 class Rook: public Chesspiece {
@@ -13,8 +12,6 @@ public:
   vector<Coor> getAttackRange();
   vector<Coor> getMoveRange();
   std::string getType();
-  Coor getCoor();
-  int getColor();
 };
 
 #endif

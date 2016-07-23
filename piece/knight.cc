@@ -14,7 +14,7 @@ void Knight::makeMove(Coor dest) {
 	coor = dest;
 }
 
-vector<Coor> getAttackRange() {
+vector<Coor> Knight::getAttackRange() {
 	vector<Coor> attackRange;
 	if (coor.y - 1 >= 0 && coor.x + 2 < 8 && !board->isEmpty(coor.x + 2, coor.y - 1)) {
 		Coor oneMove = {coor.x + 2, coor.y - 1};

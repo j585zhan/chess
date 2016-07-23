@@ -14,7 +14,7 @@ void Rook::makeMove(Coor dest) {
 	coor = dest;
 }
 
-vector<Coor> getAttackRange() {
+vector<Coor> Rook::getAttackRange() {
 	vector<Coor>attackRange;
 	for (int i = coor.x + 1; i < 8; i++) {
 		if (!board->isEmpty(i, coor.y)) {

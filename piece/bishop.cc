@@ -14,7 +14,7 @@ void Bishop::makeMove(Coor dest) {
 	coor = dest;
 }
 
-vector<Coor> getAttackRange() {
+vector<Coor> Bishop::getAttackRange() {
 	vector<Coor>attackRange;
 	int i, j;
 

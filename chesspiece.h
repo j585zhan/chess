@@ -14,11 +14,11 @@ protected:
   Coor coor;
   Board *board;
 public:
-  Chesspiece();
+  Chesspiece(int color, Coor coor, Board *b);
   virtual ~Chesspiece() = 0;
   virtual void makeMove() = 0;
-  virtual void getAttackRange() = 0;
-  virtual void getMoveRange() = 0;
+  virtual vector<Coor> getAttackRange() = 0;
+  virtual vector<Coor> getMoveRange() = 0;
   virtual std::string getType() = 0;
   Coor getCoor();
   int getColor();
