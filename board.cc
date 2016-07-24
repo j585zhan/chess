@@ -263,6 +263,12 @@ string Board::makeMove(Coor start, Coor dest) {
 	if (theChessBoard[start.x][start.y] == nullptr) {
 		return "empty";
 	}
+
+	if ((theChessBoard[start.x][start.y]->getColor() == 1 && wturn) ||
+	    (theChessBoard[start.x][start.y]->getColor() == 0 && (!wturn))) {
+		return "invalid";
+	}
+
 	cout<<theChessBoard[start.x][start.y]->getType()<<endl;
 
 	vector<Coor> Arange = theChessBoard[start.x][start.y]->getAttackRange();
