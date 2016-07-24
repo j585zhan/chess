@@ -9,7 +9,7 @@ class ChessPiece {
 protected:
   int color;
   Coor coor;
-  std::shared_ptr<Board> board;
+  Board *board;
 public:
   ChessPiece();
   ChessPiece(int color, Coor coor, Board *b);

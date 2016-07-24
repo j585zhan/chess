@@ -16,11 +16,11 @@ class Board {
   std::vector<std::vector<std::shared_ptr<ChessPiece>>> theChessBoard;  // The actual Board.
   double bScore;//up  = 1
   double wScore;//down  = 0
-  std::shared_ptr<View> view;
   //std::std::vector<std::string> history;
   
 public:
-  Board(std::shared_ptr<View> view);
+  std::shared_ptr<View> view;
+  Board();
   ~Board();
   bool wturn;
   void scoreUpdate(int color, double score);
@@ -38,6 +38,7 @@ public:
   std::string makeMove(Coor start, Coor dest);
   int getBscore();
   int getWscore();
+  void winingPlayer(int color);
     //std::vector<std::string> *getHistory();
 
 

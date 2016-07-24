@@ -9,7 +9,7 @@ struct Coor;
 
 class Controller {
 	std::shared_ptr<Board> board;
-	std::shared_ptr<View> view;
+	// std::shared_ptr<View> view;
 	
 	bool validPlayer(const std::string &player);
 	bool validPiece(const std::string &piece);
@@ -22,7 +22,7 @@ public:
 	Controller();
 	~Controller();
 	void play();
-	void notifyView(const char piece, const Coor c);
+	// void notifyView(const char piece, const Coor c);
 };
 
 #endif

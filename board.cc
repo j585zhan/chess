@@ -15,7 +15,8 @@
 
 using namespace std;
 
-Board::Board(std::shared_ptr<View> view):view{view} {
+Board::Board() {
+	view = make_shared<TextDisplay>();
 	bScore = 0; 
 	wScore = 0;
 	wturn = true;
@@ -134,7 +135,9 @@ bool Board::isCheck(){
 void Board::clearBoard(){
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-			theChessBoard[i][j] = nullptr;
+			shared_ptr<ChessPiece> temp;
+			temp = nullptr;
+			std::swap(theChessBoard[i][j], temp);
 		}
 	}
 }
@@ -191,10 +194,22 @@ void Board::initBoard(){
 	#endif
 }
 
+int Board::getBscore() {
+	return bScore;
+}
+
+int Board::getWscore() {
+	return wScore;
+}
+
+
+// 0 means white, 1 means black
 int Board::resign() {
 	if (wturn) {
+		scoreUpdate(1, 1);
 		return 0;
-	}	
+	}
+	scoreUpdate(0, 1);
 	return 1; 
 }
 
@@ -221,14 +236,16 @@ void Board::placePiece(char piece, Coor pos) {
 		cp = std::make_shared<Pawn>(chessColor, pos, this);
 	}
 	theChessBoard[pos.x][pos.y] = cp;
+	if (chessColor == 0) view->notify(piece, pos);
+	else view->notify(piece - 'A' + 'a', pos);
 }
 
 void Board::removePiece(Coor pos) {
 	theChessBoard[pos.x][pos.y] = nullptr;
+	view->notify('E', pos);
 }
 
 string Board::makeMove(Coor start, Coor dest) {
-
 	#ifdef DEBUG
 	int size = 8;
 	for (int i = size - 1; i >= 0; --i) {
@@ -322,16 +339,5 @@ string Board::makeMove(Coor start, Coor dest) {
 			return "";
 		}
 	}
-
-
-
 	return "invalid";
-}
-
-int Board::getBscore() {
-	return bScore;
-}
-
-int Board::getWscore() {
-	return wScore;
 }

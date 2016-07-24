@@ -47,7 +47,7 @@ void TextDisplay::print() {
 		}
 		cout << endl;
 	}
-	cout << endl << "  " << "abcdefgh" << endl;
+	cout << endl << "  " << "abcdefgh" << endl << endl;
 
 	#ifdef DEBUG
 	cout << theDisplay[4][1] << endl;
