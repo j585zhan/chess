@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Bishop::Bishop(int color, Coor coor, Board *b): color {color}, coor {coor}, b{b}{
+Bishop::Bishop(int color, Coor coor, Board *b): ChessPiece(color, coor, b)  {
 	type = 'B';
 }
 
@@ -23,7 +23,7 @@ vector<Coor> Bishop::getAttackRange() {
 	while (i < 8 && j < 8) {
 		if (!board->isEmpty(i, j)) {
 			Coor oneMove = {i, j};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 		i++;
@@ -35,7 +35,7 @@ vector<Coor> Bishop::getAttackRange() {
 	while (i >= 0 && j < 8) {
 		if (!board->isEmpty(i, j)) {
 			Coor oneMove = {i, j};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 		i--;
@@ -47,7 +47,7 @@ vector<Coor> Bishop::getAttackRange() {
 	while (i < 8 && j >= 0) {
 		if (!board->isEmpty(i, j)) {
 			Coor oneMove = {i, j};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 		i++;
@@ -59,7 +59,7 @@ vector<Coor> Bishop::getAttackRange() {
 	while (i >= 0 && j >= 0) {
 		if (!board->isEmpty(i, j)) {
 			Coor oneMove = {i, j};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 		i--;
@@ -78,7 +78,7 @@ vector<Coor> Bishop::getMoveRange() {
 	while (i < 8 && j < 8) {
 		if (!board->isEmpty(i, j)) break;
 		Coor oneMove = {i, j};
-		attackRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 
 		i++;
 		j++;
@@ -89,7 +89,7 @@ vector<Coor> Bishop::getMoveRange() {
 	while (i >= 0 && j < 8) {
 		if (!board->isEmpty(i, j)) break;
 		Coor oneMove = {i, j};
-		attackRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 
 		i--;
 		j++;
@@ -100,7 +100,7 @@ vector<Coor> Bishop::getMoveRange() {
 	while (i < 8 && j >= 0) {
 		if (!board->isEmpty(i, j)) break;
 		Coor oneMove = {i, j};
-		attackRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 
 		i++;
 		j--;
@@ -111,7 +111,7 @@ vector<Coor> Bishop::getMoveRange() {
 	while (i >= 0 && j >= 0) {
 		if (!board->isEmpty(i, j)) break;
 		Coor oneMove = {i, j};
-		attackRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 
 		i--;
 		j--;

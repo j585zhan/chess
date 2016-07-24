@@ -5,12 +5,13 @@
 #include <fstream>
 #include "board.h"
 #include "view.h"
+#include "textdisplay.h"
 
 using namespace std;
 
-Controller::Controller(): {
-	board = share<Board>(); //need to supply parameter for constrution of Board
-	view = make_share<View>(); //same as above
+Controller::Controller() {
+	view = make_shared<TextDisplay>(); //same as above
+	board = make_shared<Board>(view); //need to supply parameter for constrution of Board
 }
 
 Controller::~Controller() {}
@@ -27,7 +28,8 @@ bool Controller::validPlayer(const string &player) {
 //kqbrnp
 
 bool Controller::validPiece(const string &piece) {
-	string s = toupper(piece);
+	string s;
+	s += toupper(piece[0]);
 	if (s == "K" || s == "Q" || s == "B" || s == "R" || s == "N" || s == "P") {
 		return true;
 	}
@@ -46,34 +48,36 @@ bool Controller::validPos(const string &pos) {
 }
 
 Coor Controller::toCoor(const string &pos) {
-	int x = pos[0] - 'a' + 1;
-	int y = pos[1] - '1' + 1;
-	Coor c {x, y}
+	int x = pos[0] - 'a';
+	int y = pos[1] - '1';
+	Coor c {x, y};
 	return c;
 }
 
 void Controller::notifyView(const char piece, const Coor c) {
-	view->notifyView(piece, c);
+	view->notify(piece, c);
 }
 
 void Controller::setup(istream &is) {
-	board->clearBoard();
+	// if (board) board->clearBoard();
+	board->initBoard();
+	view->print();
 	string cmd;
 	while (is >> cmd) {
-		view->print();
 		if (cmd == "+") {
 			string piece, pos;
-			is << piece << pos;
+			is >> piece >> pos;
 			if (validPiece(piece) && validPos(pos)) {
 				Coor c = toCoor(pos);
 				board->placePiece(piece[0], c);
 				notifyView(piece[0], c); // notifyView() will place piece at pos 
+				view->print();
 			} else {
 				cout << "Invalid + usage" << endl;
 			}
 		} else if (cmd == "-") {
 			string pos;
-			is << pos;
+			is >> pos;
 			if (validPos(pos)) {
 				Coor c = toCoor(pos);
 				board->removePiece(c);
@@ -86,12 +90,13 @@ void Controller::setup(istream &is) {
 					else emptyPosColor = '_';
 				}
 				notifyView(emptyPosColor, c);
+				view->print();
 			} else {
 				cout << "Invalid - usage, check your coordinates" << endl;
 			}
 		} else if (cmd == "=") {
 			string color;
-			is << color;
+			is >> color;
 			if (color == "black"){
 				board->wturn = false;
 			} else if (color == "white") {
@@ -99,7 +104,7 @@ void Controller::setup(istream &is) {
 			} else {
 				cout << "Invalid color" << endl;
 			}
-		} else if (cmd == done) {
+		} else if (cmd == "done") {
 			if (board->validBoard()) {
 				cout << "Board setup completed" << endl;
 				break;
@@ -125,7 +130,7 @@ void Controller::game() {
 			break;
 		}
 		if (board->isCheck()) {
-			if (board->wTurn) {
+			if (board->wturn) {
 				cout << "White is in check" << endl;
 			} else {
 				cout << "Black is in check" << endl;
@@ -152,7 +157,7 @@ void Controller::game() {
 				cout << "Incorrect usage of move, check your coordinates again" << endl;
 			}
 		} else if (cmd == "resign") {
-			if (board->wTurn) {
+			if (board->wturn) {
 				cout << "Black wins!" << endl;
 			} else {
 				cout << "White wins!" << endl;
@@ -162,8 +167,8 @@ void Controller::game() {
 		}
 	}
 	cout << "Final Score:" << endl;
-	cout << "White: " << board->getWScore() << endl;
-	cout << "Black: " << board->getBScore() << endl;
+	cout << "White: " << board->getWscore() << endl;
+	cout << "Black: " << board->getBscore() << endl;
 }
 
 void Controller::play() {

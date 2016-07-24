@@ -1,9 +1,9 @@
 #ifndef __KNIGHT_H__
 #define __KNIGHT_H__
 #include <vector>
-#include "Chesspiece.h"
+#include "chesspiece.h"
 
-class Knight: public Chesspiece {
+class Knight: public ChessPiece {
   char type;
 public:
   Knight(int color, Coor coor, Board *b);

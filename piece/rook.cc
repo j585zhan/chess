@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Rook::Rook(int color, Coor coor, Board *b): color {color}, coor {coor}, b{b}{
+Rook::Rook(int color, Coor coor, Board *b): ChessPiece(color, coor, b)  {
 	type = 'R';
 }
 
@@ -19,7 +19,7 @@ vector<Coor> Rook::getAttackRange() {
 	for (int i = coor.x + 1; i < 8; i++) {
 		if (!board->isEmpty(i, coor.y)) {
 			Coor oneMove = {i, coor.y};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 	}
@@ -27,7 +27,7 @@ vector<Coor> Rook::getAttackRange() {
 	for (int i = coor.x - 1; i >= 0; i--) {
 		if (!board->isEmpty(i, coor.y)) {
 			Coor oneMove = {i, coor.y};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 	}
@@ -35,7 +35,7 @@ vector<Coor> Rook::getAttackRange() {
 	for (int i = coor.y + 1; i < 8; i++) {
 		if (!board->isEmpty(coor.x, i)) {
 			Coor oneMove = {coor.x, i};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 	}
@@ -43,7 +43,7 @@ vector<Coor> Rook::getAttackRange() {
 	for (int i = coor.y - 1; i >= 0; i--) {
 		if (!board->isEmpty(coor.x, i)) {
 			Coor oneMove = {coor.x, i};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 	}
@@ -56,25 +56,25 @@ vector<Coor> Rook::getMoveRange() {
 	for (int i = coor.x + 1; i < 8; i++) {
 		if (!board->isEmpty(i, coor.y)) break;
 		Coor oneMove = {i, coor.y};
-		moveRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 	}
 
 	for (int i = coor.x - 1; i >= 0; i--) {
 		if (!board->isEmpty(i, coor.y)) break;
 		Coor oneMove = {i, coor.y};
-		moveRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 	}
 
 	for (int i = coor.y + 1; i < 8; i++) {
 		if (!board->isEmpty(coor.x, i)) break;
 		Coor oneMove = {coor.x, i};
-		moveRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 	}
 
 	for (int i = coor.y - 1; i >= 0; i--) {
 		if (!board->isEmpty(coor.x, i)) break;
 		Coor oneMove = {coor.x, i};
-		moveRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 	}
 
 	return moveRange;

@@ -1,9 +1,9 @@
 #ifndef __BISHOP_H__
 #define __BISHOP_H__
 #include <vector>
-#include "Chesspiece.h"
+#include "chesspiece.h"
 
-class Bishop: public Chesspiece {
+class Bishop: public ChessPiece {
   char type;
 public:
   Bishop(int color, Coor coor, Board *b);

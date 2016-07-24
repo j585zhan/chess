@@ -8,21 +8,21 @@ class View;
 struct Coor;
 
 class Controller {
-	std::share_ptr<Board> board;
-	std::share_ptr<View> view;
+	std::shared_ptr<Board> board;
+	std::shared_ptr<View> view;
 	
 	bool validPlayer(const std::string &player);
 	bool validPiece(const std::string &piece);
 	bool validPos(const std::string &pos);
 	Coor toCoor(const std::string &pos);
-	void notifyView(const char piece, const Coor c);
-	void setup(istream &is);
-	void game(const std::string &player1, const std::string &player2);
+	void setup(std::istream &is);
+	void game();
 	std::string getPromotion();
 public:
 	Controller();
 	~Controller();
 	void play();
+	void notifyView(const char piece, const Coor c);
 };
 
 #endif

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Pawn::Pawn(int color, Coor coor, Board *b): color {color}, coor {coor}, b{b}{
+Pawn::Pawn(int color, Coor coor, Board *b): ChessPiece(color, coor, b) {
 	type = 'P';
 }
 
@@ -20,20 +20,20 @@ vector<Coor> Pawn::getAttackRange() {
 	if (color == 0) {
 		if (coor.y + 1 < 8 && coor.x + 1 < 8 && !board->isEmpty(coor.x + 1, coor.y + 1)) {
 			Coor oneMove = {coor.x + 1, coor.y + 1};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 		}
 		if (coor.y + 1 < 8 && coor.x - 1 >= 0 && !board->isEmpty(coor.x - 1, coor.y + 1)) {
 			Coor oneMove = {coor.x - 1, coor.y + 1};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 		}
 	} else {
 		if (coor.y - 1 >= 0 && coor.x + 1 < 8 && !board->isEmpty(coor.x + 1, coor.y - 1)) {
 			Coor oneMove = {coor.x + 1, coor.y - 1};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 		}
 		if (coor.y - 1 >= 0 && coor.x - 1 >= 0 && !board->isEmpty(coor.x - 1, coor.y - 1)) {
 			Coor oneMove = {coor.x - 1, coor.y - 1};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 		}
 	}
 	return attackRange;
@@ -45,24 +45,24 @@ vector<Coor> Pawn::getMoveRange() {
 		if (coor.y == 1) {
 			if (board->isEmpty(coor.x, coor.y + 2)) {
 				Coor oneMove = {coor.x, coor.y + 2};
-				moveRange.emplace(oneMove);
+				moveRange.emplace_back(oneMove);
 			}
 		}
 		if ( coor.y + 1 < 8 && board->isEmpty(coor.x, coor.y + 1)) {
 			Coor oneMove = {coor.x, coor.y + 1};
-			moveRange.emplace(oneMove);
+			moveRange.emplace_back(oneMove);
 		}
 	} else {
 		if (coor.y == 6) {
 			if (board->isEmpty(coor.x, coor.y - 2)) {
 				Coor oneMove = {coor.x, coor.y - 2};
-				moveRange.emplace(oneMove);
+				moveRange.emplace_back(oneMove);
 			}
 		}
 		
 		if (coor.y - 1 >= 0 && board->isEmpty(coor.x, coor.y - 1)) {
 			Coor oneMove = {coor.x, coor.y - 1};
-			moveRange.emplace(oneMove);
+			moveRange.emplace_back(oneMove);
 		}
 	}
 

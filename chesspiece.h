@@ -3,20 +3,18 @@
 #include <vector>
 #include "board.h"
 
-struct Coor{
-  int x;
-  int y;
-};
+using std::vector;
 
-class Chesspiece {
+class ChessPiece {
 protected:
   int color;
   Coor coor;
-  std::shared_pointer<Board> board;
+  std::shared_ptr<Board> board;
 public:
-  Chesspiece(int color, Coor coor, Board *b);
-  virtual ~Chesspiece() = 0;
-  virtual void makeMove() = 0;
+  ChessPiece();
+  ChessPiece(int color, Coor coor, Board *b);
+  virtual ~ChessPiece() = 0;
+  virtual void makeMove(Coor dest) = 0;
   virtual vector<Coor> getAttackRange() = 0;
   virtual vector<Coor> getMoveRange() = 0;
   virtual char getType() = 0;

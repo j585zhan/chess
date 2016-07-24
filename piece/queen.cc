@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Queen::Queen(int color, Coor coor, Board *b): color {color}, coor {coor}, b{b}{
+Queen::Queen(int color, Coor coor, Board *b): ChessPiece(color, coor, b)  {
 	type = 'Q';
 }
 
@@ -19,7 +19,7 @@ vector<Coor> Queen::getAttackRange() {
 	for (int i = coor.x + 1; i < 8; i++) {
 		if (!board->isEmpty(i, coor.y)) {
 			Coor oneMove = {i, coor.y};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 	}
@@ -27,7 +27,7 @@ vector<Coor> Queen::getAttackRange() {
 	for (int i = coor.x - 1; i >= 0; i--) {
 		if (!board->isEmpty(i, coor.y)) {
 			Coor oneMove = {i, coor.y};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 	}
@@ -35,7 +35,7 @@ vector<Coor> Queen::getAttackRange() {
 	for (int i = coor.y + 1; i < 8; i++) {
 		if (!board->isEmpty(coor.x, i)) {
 			Coor oneMove = {coor.x, i};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 	}
@@ -43,7 +43,7 @@ vector<Coor> Queen::getAttackRange() {
 	for (int i = coor.y - 1; i >= 0; i--) {
 		if (!board->isEmpty(coor.x, i)) {
 			Coor oneMove = {coor.x, i};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 	}
@@ -55,7 +55,7 @@ vector<Coor> Queen::getAttackRange() {
 	while (i < 8 && j < 8) {
 		if (!board->isEmpty(i, j)) {
 			Coor oneMove = {i, j};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 		i++;
@@ -67,7 +67,7 @@ vector<Coor> Queen::getAttackRange() {
 	while (i >= 0 && j < 8) {
 		if (!board->isEmpty(i, j)) {
 			Coor oneMove = {i, j};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 		i--;
@@ -79,7 +79,7 @@ vector<Coor> Queen::getAttackRange() {
 	while (i < 8 && j >= 0) {
 		if (!board->isEmpty(i, j)) {
 			Coor oneMove = {i, j};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 		i++;
@@ -91,7 +91,7 @@ vector<Coor> Queen::getAttackRange() {
 	while (i >= 0 && j >= 0) {
 		if (!board->isEmpty(i, j)) {
 			Coor oneMove = {i, j};
-			attackRange.emplace(oneMove);
+			attackRange.emplace_back(oneMove);
 			break;
 		}
 		i--;
@@ -106,25 +106,25 @@ vector<Coor> Queen::getMoveRange() {
 	for (int i = coor.x + 1; i < 8; i++) {
 		if (!board->isEmpty(i, coor.y)) break;
 		Coor oneMove = {i, coor.y};
-		moveRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 	}
 
 	for (int i = coor.x - 1; i >= 0; i--) {
 		if (!board->isEmpty(i, coor.y)) break;
 		Coor oneMove = {i, coor.y};
-		moveRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 	}
 
 	for (int i = coor.y + 1; i < 8; i++) {
 		if (!board->isEmpty(coor.x, i)) break;
 		Coor oneMove = {coor.x, i};
-		moveRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 	}
 
 	for (int i = coor.y - 1; i >= 0; i--) {
 		if (!board->isEmpty(coor.x, i)) break;
 		Coor oneMove = {coor.x, i};
-		moveRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 	}
 
 	int i, j;
@@ -134,7 +134,7 @@ vector<Coor> Queen::getMoveRange() {
 	while (i < 8 && j < 8) {
 		if (!board->isEmpty(i, j)) break;
 		Coor oneMove = {i, j};
-		attackRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 
 		i++;
 		j++;
@@ -145,7 +145,7 @@ vector<Coor> Queen::getMoveRange() {
 	while (i >= 0 && j < 8) {
 		if (!board->isEmpty(i, j)) break;
 		Coor oneMove = {i, j};
-		attackRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 
 		i--;
 		j++;
@@ -156,7 +156,7 @@ vector<Coor> Queen::getMoveRange() {
 	while (i < 8 && j >= 0) {
 		if (!board->isEmpty(i, j)) break;
 		Coor oneMove = {i, j};
-		attackRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 
 		i++;
 		j--;
@@ -167,7 +167,7 @@ vector<Coor> Queen::getMoveRange() {
 	while (i >= 0 && j >= 0) {
 		if (!board->isEmpty(i, j)) break;
 		Coor oneMove = {i, j};
-		attackRange.emplace(oneMove);
+		moveRange.emplace_back(oneMove);
 
 		i--;
 		j--;

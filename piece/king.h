@@ -1,9 +1,9 @@
 #ifndef __KING_H__
 #define __KING_H__
 #include <vector>
-#include "Chesspiece.h"
+#include "chesspiece.h"
 
-class King: public Chesspiece {
+class King: public ChessPiece {
   char type;
 public:
   King(int color, Coor coor, Board *b);

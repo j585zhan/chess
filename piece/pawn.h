@@ -1,9 +1,9 @@
 #ifndef __PAWN_H__
 #define __PAWN_H__
 #include <vector>
-#include "Chesspiece.h"
+#include "chesspiece.h"
 
-class Pawn: public Chesspiece {
+class Pawn: public ChessPiece {
   char type;
 public:
   Pawn(int color, Coor coor, Board *b);

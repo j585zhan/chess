@@ -1,9 +1,9 @@
 #ifndef __ROOK_H__
 #define __ROOK_H__
 #include <vector>
-#include "Chesspiece.h"
+#include "chesspiece.h"
 
-class Rook: public Chesspiece {
+class Rook: public ChessPiece {
   char type;
 public:
   Rook(int color, Coor coor, Board *b);
