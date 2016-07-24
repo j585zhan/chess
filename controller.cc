@@ -122,15 +122,6 @@ void Controller::game() {
 	board->view->print();
 	string cmd;
 	while (cin >> cmd) {
-		if (board->isCheckmate()) {
-			int result = board->resign(); //0 means white resign, 1 means black resign
-			if (result) {
-				cout << "Checkmate! White wins!" << endl;
-			} else {
-				cout << "Checkmate! Black wins!" << endl;
-			}
-			break;
-		}
 		if (board->isCheck()) {
 			if (board->wturn) {
 				cout << "White is in check" << endl;
@@ -170,6 +161,15 @@ void Controller::game() {
 			}
 		} else if (cmd == "undo") {
 			// place implemation of undo here
+		}
+		if (board->isCheckmate()) {
+			int result = board->resign(); //0 means white resign, 1 means black resign
+			if (result) {
+				cout << "Checkmate! White wins!" << endl;
+			} else {
+				cout << "Checkmate! Black wins!" << endl;
+			}
+			break;
 		}
 	}
 }
