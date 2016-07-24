@@ -138,6 +138,8 @@ void Board::clearBoard(){
 			shared_ptr<ChessPiece> temp;
 			temp = nullptr;
 			std::swap(theChessBoard[i][j], temp);
+			Coor c {i, j};
+			view->notify('E', c);
 		}
 	}
 }
@@ -183,15 +185,6 @@ void Board::initBoard(){
 		}
 		theChessBoard.emplace_back(theLine);
 	}
-
-	#ifdef DEBUG
-	// for (int i = 0; i < 8; ++i) {
-	// 	for (int j = 0; j < 8; ++j) {
-	// 		if (!theChessBoard[i][j]) cout << " ";
-	// 		else theChessBoard[i]
-	// 	}
-	// }
-	#endif
 }
 
 int Board::getBscore() {
@@ -207,6 +200,7 @@ int Board::getWscore() {
 int Board::resign() {
 	if (wturn) {
 		scoreUpdate(1, 1);
+		
 		return 0;
 	}
 	scoreUpdate(0, 1);

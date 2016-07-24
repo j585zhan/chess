@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Controller::Controller() {
+Controller::Controller(): presetBoard {false} {
 	// view = make_shared<TextDisplay>();
 	board = make_shared<Board>();
 }
@@ -58,10 +58,11 @@ Coor Controller::toCoor(const string &pos) {
 // 	view->notify(piece, c);
 // }
 
-void Controller::setup(istream &is) {
-	// if (board) board->clearBoard();
+void Controller::setup(istream &is, bool showStep) {
+	presetBoard = true;
 	board->initBoard();
-	board->view->print();
+	board->clearBoard();
+	if (showStep) board->view->print();
 	string cmd;
 	while (is >> cmd) {
 		if (cmd == "+") {
@@ -71,7 +72,7 @@ void Controller::setup(istream &is) {
 				Coor c = toCoor(pos);
 				board->placePiece(piece[0], c);
 				// notifyView(piece[0], c); // notifyView() will place piece at pos 
-				board->view->print();
+				if (showStep) board->view->print();
 			} else {
 				cout << "Invalid + usage" << endl;
 			}
@@ -90,7 +91,7 @@ void Controller::setup(istream &is) {
 				// 	else emptyPosColor = '_';
 				// }
 				// notifyView(emptyPosColor, c);
-				board->view->print();
+				if (showStep) board->view->print();
 			} else {
 				cout << "Invalid - usage, check your coordinates" << endl;
 			}
@@ -113,10 +114,11 @@ void Controller::setup(istream &is) {
 			}
 		}
 	}
+	if (!showStep) board->view->print();
 }
 
 void Controller::game() {
-	board->initBoard();
+	if (!presetBoard) board->initBoard();
 	board->view->print();
 	string cmd;
 	while (cin >> cmd) {
@@ -140,6 +142,8 @@ void Controller::game() {
 			cout << "Stalemate!" << endl;
 			break;
 		}
+		// if (board->wturn) cout << "White player's turn" << endl;
+		// else cout << "Black player's turn" << endl;
 		if (cmd == "move") {
 			string start, dest;
 			cin >> start >> dest;
@@ -159,16 +163,15 @@ void Controller::game() {
 		} else if (cmd == "resign") {
 			if (!board->resign()) {
 				cout << "Black wins!" << endl;
+				return;
 			} else {
 				cout << "White wins!" << endl;
+				return;
 			}
 		} else if (cmd == "undo") {
 			// place implemation of undo here
 		}
 	}
-	cout << "Final Score:" << endl;
-	cout << "White: " << board->getWscore() << endl;
-	cout << "Black: " << board->getBscore() << endl;
 }
 
 void Controller::play() {
@@ -180,15 +183,19 @@ void Controller::play() {
 			if (validPlayer(player1) && validPlayer(player2)) {
 				board->setPlayer(player1, player2);
 				game();
+				presetBoard = false;
 			}
 		} else if (cmd == "setup") {
-			setup(cin);
+			setup(cin, true);
 		} else if (cmd == "read") {
 			string filename;
 			cin >> filename;
 			ifstream ifs;
 			ifs.open(filename);
-			setup(ifs);
+			setup(ifs, false);
 		}
 	}
+	cout << "Final Score:" << endl;
+	cout << "White: " << board->getWscore() << endl;
+	cout << "Black: " << board->getBscore() << endl;
 }

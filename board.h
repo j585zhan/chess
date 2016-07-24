@@ -38,7 +38,6 @@ public:
   std::string makeMove(Coor start, Coor dest);
   int getBscore();
   int getWscore();
-  void winingPlayer(int color);
     //std::vector<std::string> *getHistory();
 
 
