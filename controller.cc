@@ -54,15 +54,12 @@ Coor Controller::toCoor(const string &pos) {
 	return c;
 }
 
-// void Controller::notifyView(const char piece, const Coor c) {
-// 	view->notify(piece, c);
-// }
 
 void Controller::setup(istream &is, bool showStep) {
 	presetBoard = true;
 	board->initBoard();
 	board->clearBoard();
-	if (showStep) board->view->print();
+	if (showStep) board->print();
 	string cmd;
 	while (is >> cmd) {
 		if (cmd == "+") {
@@ -71,8 +68,7 @@ void Controller::setup(istream &is, bool showStep) {
 			if (validPiece(piece) && validPos(pos)) {
 				Coor c = toCoor(pos);
 				board->placePiece(piece[0], c);
-				// notifyView(piece[0], c); // notifyView() will place piece at pos 
-				if (showStep) board->view->print();
+				if (showStep) board->print();
 			} else {
 				cout << "Invalid + usage" << endl;
 			}
@@ -90,8 +86,7 @@ void Controller::setup(istream &is, bool showStep) {
 				// 	if (c.y % 2 == 0) emptyPosColor = ' ';
 				// 	else emptyPosColor = '_';
 				// }
-				// notifyView(emptyPosColor, c);
-				if (showStep) board->view->print();
+				if (showStep) board->print();
 			} else {
 				cout << "Invalid - usage, check your coordinates" << endl;
 			}
@@ -114,12 +109,12 @@ void Controller::setup(istream &is, bool showStep) {
 			}
 		}
 	}
-	if (!showStep) board->view->print();
+	if (!showStep) board->print();
 }
 
 void Controller::game() {
 	if (!presetBoard) board->initBoard();
-	board->view->print();
+	board->print();
 	string cmd;
 	while (cin >> cmd) {
 		if (board->isCheck()) {
@@ -147,7 +142,7 @@ void Controller::game() {
 					cout << "Invalid move" << endl;
 					continue;
 				}
-				board->view->print();
+				board->print();
 			} else {
 				cout << "Incorrect usage of move, check your coordinates again" << endl;
 			}

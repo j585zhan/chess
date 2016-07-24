@@ -19,7 +19,8 @@ class Board {
   //std::std::vector<std::string> history;
   
 public:
-  std::shared_ptr<View> view;
+  std::vector<std::shared_ptr<View>> VecView;
+
   Board();
   ~Board();
   bool wturn;
@@ -29,7 +30,8 @@ public:
   bool isCheck();
   void clearBoard();
   void initBoard();
-  // void notifyView(char, Coor);
+  void notifyView(char piece, Coor c);
+  void print();
   int resign(); // we need it here
   void placePiece(char piece, Coor pos);
   void removePiece(Coor pos);

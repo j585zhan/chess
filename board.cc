@@ -13,10 +13,17 @@
 #include "view.h"
 #include "textdisplay.h"
 
+#ifdef GRAPHIC
+#include "graphicdisplay.h"
+#endif
+
 using namespace std;
 
 Board::Board() {
-	view = make_shared<TextDisplay>();
+	VecView.emplace_back(make_shared<TextDisplay>());
+	#ifdef GRAPHIC
+	VecView.emplace_back(make_shared<GraphicDisplay>());
+	#endif
 	bScore = 0; 
 	wScore = 0;
 	wturn = true;
@@ -132,6 +139,18 @@ bool Board::isCheck(){
 	return false;
 }
 
+void Board::notifyView(char piece, Coor c) {
+	for (auto v : VecView) {
+		v->notify(piece, c);
+	}
+}
+
+void Board::print() {
+	for (auto v : VecView) {
+		v->print();
+	}
+}
+
 void Board::clearBoard(){
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
@@ -139,7 +158,7 @@ void Board::clearBoard(){
 			temp = nullptr;
 			std::swap(theChessBoard[i][j], temp);
 			Coor c {i, j};
-			view->notify('E', c);
+			notifyView('E', c);
 		}
 	}
 }
@@ -172,7 +191,7 @@ void Board::initBoard(){
 				cp = std::make_shared<Pawn>(chessColor, Coor{i, j}, this);
 			} else {
 				cp = nullptr;
-				view->notify('E', Coor{i, j});
+				notifyView('E', Coor{i, j});
 				theLine.emplace_back(cp);
 				continue;
 			}
@@ -180,7 +199,7 @@ void Board::initBoard(){
 			if (chessColor == 1) {
 				chess -= ('A' - 'a');
 			}
-			view->notify(chess, Coor{i, j});
+			notifyView(chess, Coor{i, j});
 			theLine.emplace_back(cp);
 		}
 		theChessBoard.emplace_back(theLine);
@@ -230,13 +249,13 @@ void Board::placePiece(char piece, Coor pos) {
 		cp = std::make_shared<Pawn>(chessColor, pos, this);
 	}
 	theChessBoard[pos.x][pos.y] = cp;
-	if (chessColor == 0) view->notify(piece, pos);
-	else view->notify(piece - 'A' + 'a', pos);
+	if (chessColor == 0) notifyView(piece, pos);
+	else notifyView(piece - 'A' + 'a', pos);
 }
 
 void Board::removePiece(Coor pos) {
 	theChessBoard[pos.x][pos.y] = nullptr;
-	view->notify('E', pos);
+	notifyView('E', pos);
 }
 
 string Board::makeMove(Coor start, Coor dest) {
@@ -269,7 +288,7 @@ string Board::makeMove(Coor start, Coor dest) {
 	vector<Coor> Mrange = theChessBoard[start.x][start.y]->getMoveRange();
 	for (int i = 0; i < Arange.size(); i++) {
 		if (Arange[i].x == dest.x && Arange[i].y == dest.y) {
-			//theChessBoard[dest.x][dest.y] = nullptr;
+			theChessBoard[dest.x][dest.y] = nullptr;
 			//cout<<0<<endl;
 			using std::swap;
 			swap(theChessBoard[start.x][start.y], theChessBoard[dest.x][dest.y]);
@@ -279,15 +298,15 @@ string Board::makeMove(Coor start, Coor dest) {
 			//cout<<2<<endl;
 			theChessBoard[dest.x][dest.y]->makeMove(dest);
 			//cout<<3<<endl;
-			view->notify('E', start);
+			notifyView('E', start);
 
 			char chess = theChessBoard[dest.x][dest.y]->getType();
 			if (theChessBoard[dest.x][dest.y]->getColor() == 1) {
 				chess -= ('A' - 'a');
 			}
-			//view->notify(chess,dest);
+			//notifyView(chess,dest);
 
-			view->notify(chess,theChessBoard[dest.x][dest.y]->getCoor());
+			notifyView(chess,theChessBoard[dest.x][dest.y]->getCoor());
 			wturn = !wturn;
 
 			#ifdef DEBUG
@@ -309,7 +328,7 @@ string Board::makeMove(Coor start, Coor dest) {
 		if (Mrange[i].x == dest.x && Mrange[i].y == dest.y) {
 			theChessBoard[dest.x][dest.y] = theChessBoard[start.x][start.y];
 			theChessBoard[start.x][start.y] = nullptr;
-			view->notify('E', start);
+			notifyView('E', start);
 			//The dest at the last should be ----> theChessBoard[dest.x][dest.y]->getCoor()
 			// you need to check the coorindate of the piece!!!!!
 			// This will work for now but it is the wrong idea
@@ -323,7 +342,7 @@ string Board::makeMove(Coor start, Coor dest) {
 			
 			theChessBoard[dest.x][dest.y]->makeMove(dest);
 
-			view->notify(chess, theChessBoard[dest.x][dest.y]->getCoor());
+			notifyView(chess, theChessBoard[dest.x][dest.y]->getCoor());
 
 			#ifdef DEBUG
 			for (int i = size - 1; i >= 0; --i) {
