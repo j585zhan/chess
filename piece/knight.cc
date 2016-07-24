@@ -24,15 +24,15 @@ vector<Coor> Knight::getAttackRange() {
 		Coor oneMove = {coor.x - 2, coor.y - 1};
 		attackRange.emplace_back(oneMove);
 	}
-	if (coor.y + 1 >= 0 && coor.x + 2 >= 0 && !board->isEmpty(coor.x + 2, coor.y + 1)) {
+	if (coor.y + 1 < 8 && coor.x + 2 < 8 && !board->isEmpty(coor.x + 2, coor.y + 1)) {
 		Coor oneMove = {coor.x + 2, coor.y + 1};
 		attackRange.emplace_back(oneMove);
 	}
-	if (coor.y + 1 >= 0 && coor.x - 2 >= 0 && !board->isEmpty(coor.x - 2, coor.y + 1)) {
+	if (coor.y + 1 < 8 && coor.x - 2 >= 0 && !board->isEmpty(coor.x - 2, coor.y + 1)) {
 		Coor oneMove = {coor.x - 2, coor.y + 1};
 		attackRange.emplace_back(oneMove);
 	}
-	if (coor.y - 2 >= 0 && coor.x + 1 >= 0 && !board->isEmpty(coor.x + 1, coor.y - 2)) {
+	if (coor.y - 2 >= 0 && coor.x + 1 < 8 && !board->isEmpty(coor.x + 1, coor.y - 2)) {
 		Coor oneMove = {coor.x + 1, coor.y - 2};
 		attackRange.emplace_back(oneMove);
 	}
@@ -40,11 +40,11 @@ vector<Coor> Knight::getAttackRange() {
 		Coor oneMove = {coor.x - 1, coor.y - 2};
 		attackRange.emplace_back(oneMove);
 	}
-	if (coor.y + 2 >= 0 && coor.x + 1 >= 0 && !board->isEmpty(coor.x + 1, coor.y + 2)) {
+	if (coor.y + 2 < 8 && coor.x + 1 < 8 && !board->isEmpty(coor.x + 1, coor.y + 2)) {
 		Coor oneMove = {coor.x + 1, coor.y + 2};
 		attackRange.emplace_back(oneMove);
 	}
-	if (coor.y + 2 >= 0 && coor.x - 1 >= 0 && !board->isEmpty(coor.x - 1, coor.y + 2)) {
+	if (coor.y + 2 < 8 && coor.x - 1 >= 0 && !board->isEmpty(coor.x - 1, coor.y + 2)) {
 		Coor oneMove = {coor.x - 1, coor.y + 2};
 		attackRange.emplace_back(oneMove);
 	}
@@ -63,15 +63,15 @@ vector<Coor> Knight::getMoveRange() {
 		Coor oneMove = {coor.x - 2, coor.y - 1};
 		moveRange.emplace_back(oneMove);
 	}
-	if (coor.y + 1 >= 0 && coor.x + 2 >= 0 && board->isEmpty(coor.x + 2, coor.y + 1)) {
+	if (coor.y + 1 < 8 && coor.x + 2 < 8 && board->isEmpty(coor.x + 2, coor.y + 1)) {
 		Coor oneMove = {coor.x + 2, coor.y + 1};
 		moveRange.emplace_back(oneMove);
 	}
-	if (coor.y + 1 >= 0 && coor.x - 2 >= 0 && board->isEmpty(coor.x - 2, coor.y + 1)) {
+	if (coor.y + 1 < 8 && coor.x - 2 >= 0 && board->isEmpty(coor.x - 2, coor.y + 1)) {
 		Coor oneMove = {coor.x - 2, coor.y + 1};
 		moveRange.emplace_back(oneMove);
 	}
-	if (coor.y - 2 >= 0 && coor.x + 1 >= 0 && board->isEmpty(coor.x + 1, coor.y - 2)) {
+	if (coor.y - 2 >= 0 && coor.x + 1 < 8 && board->isEmpty(coor.x + 1, coor.y - 2)) {
 		Coor oneMove = {coor.x + 1, coor.y - 2};
 		moveRange.emplace_back(oneMove);
 	}
@@ -79,11 +79,11 @@ vector<Coor> Knight::getMoveRange() {
 		Coor oneMove = {coor.x - 1, coor.y - 2};
 		moveRange.emplace_back(oneMove);
 	}
-	if (coor.y + 2 >= 0 && coor.x + 1 >= 0 && board->isEmpty(coor.x + 1, coor.y + 2)) {
+	if (coor.y + 2 < 8 && coor.x + 1 < 8 && board->isEmpty(coor.x + 1, coor.y + 2)) {
 		Coor oneMove = {coor.x + 1, coor.y + 2};
 		moveRange.emplace_back(oneMove);
 	}
-	if (coor.y + 2 >= 0 && coor.x - 1 >= 0 && board->isEmpty(coor.x - 1, coor.y + 2)) {
+	if (coor.y + 2 < 8 && coor.x - 1 >= 0 && board->isEmpty(coor.x - 1, coor.y + 2)) {
 		Coor oneMove = {coor.x - 1, coor.y + 2};
 		moveRange.emplace_back(oneMove);
 	}
