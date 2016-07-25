@@ -60,115 +60,87 @@ bool Board::isEmpty(int x, int y) {
 }
 
 bool Board::isCheckmate(){
-	vector<Coor> Mrange;
-	Coor Kcoor;
-	int Kcolor;
-	if (wturn) {
-		Kcolor = 0;
-	} else {
-		Kcolor = 1;
-	}
-	for (int i = 0; i < 8; i++) {
-		for (int j = 0; j < 8; j++) {
-			if (!theChessBoard[i][j]) continue;
-			if (theChessBoard[i][j]->getColor() == Kcolor && 
-				theChessBoard[i][j]->getType() == 'K') {
-				Mrange = theChessBoard[i][j]->getMoveRange();
-				//for (int k = 0; k < Mrange.size(); k++) {
-				//	cout<<"King range: "<<Mrange[k].x<<", "<<Mrange[k].y<<endl;
-				//}
-			}
-		}
-	}
-	cout<<"h1"<<endl;
-	for (int i = 0; i < 8; i++) {
-		for (int j = 0; j < 8; j++) {
-//			cout<<i<<j<<endl;
-			if (!theChessBoard[i][j]) continue;
-			if (theChessBoard[i][j]->getColor() == (Kcolor+1)%2) {
-				//cout<<" enemy "<<endl;
-				vector<Coor> Arange = theChessBoard[i][j]->getAttackRange();
-				for (int a = 0; a < Arange.size(); a++) {
-					//cout<<Arange[a].x<<", "<<Arange[a].y<<endl;
-					for (int b = 0; b < Mrange.size(); b++) {
-						//cout<<Mrange[b].x<<" mrange "<<Mrange[b].y<<endl;
-						if (Mrange[b].x == Arange[a].x && Mrange[b].y == Arange[a].y) {
-							cout<<"in"<<endl;
-							Mrange.erase(Mrange.begin()+b);
-							break;
-						}
-					}
-				}
-			}
-		}
-	}
-	cout<<"haha"<<endl;
-	//return isCheck();
-	return (isCheck() && (Mrange.size() == 0));
+// 	vector<Coor> Mrange;
+// 	Coor Kcoor;
+// 	int Kcolor;
+// 	if (wturn) {
+// 		Kcolor = 0;
+// 	} else {
+// 		Kcolor = 1;
+// 	}
+// 	for (int i = 0; i < 8; i++) {
+// 		for (int j = 0; j < 8; j++) {
+// 			if (!theChessBoard[i][j]) continue;
+// 			if (theChessBoard[i][j]->getColor() == Kcolor && 
+// 				theChessBoard[i][j]->getType() == 'K') {
+// 				Mrange = theChessBoard[i][j]->getMoveRange();
+// 				//for (int k = 0; k < Mrange.size(); k++) {
+// 				//	cout<<"King range: "<<Mrange[k].x<<", "<<Mrange[k].y<<endl;
+// 				//}
+// 			}
+// 		}
+// 	}
+// 	cout<<"h1"<<endl;
+// 	for (int i = 0; i < 8; i++) {
+// 		for (int j = 0; j < 8; j++) {
+// //			cout<<i<<j<<endl;
+// 			if (!theChessBoard[i][j]) continue;
+// 			if (theChessBoard[i][j]->getColor() == (Kcolor+1)%2) {
+// 				//cout<<" enemy "<<endl;
+// 				vector<Coor> Arange = theChessBoard[i][j]->getAttackRange();
+// 				for (int a = 0; a < Arange.size(); a++) {
+// 					//cout<<Arange[a].x<<", "<<Arange[a].y<<endl;
+// 					for (int b = 0; b < Mrange.size(); b++) {
+// 						//cout<<Mrange[b].x<<" mrange "<<Mrange[b].y<<endl;
+// 						if (Mrange[b].x == Arange[a].x && Mrange[b].y == Arange[a].y) {
+// 							cout<<"in"<<endl;
+// 							Mrange.erase(Mrange.begin()+b);
+// 							break;
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// 	cout<<"haha"<<endl;
+	return isCheck();
+	//return (isCheck() && (Mrange.size() == 0));
 }
 
 bool Board::isCheck(){
 	Coor Kcoor;
-	//cout<<"ischeck"<<endl;
+	int c;
 	if (wturn) {
-		//cout<<"wturn"<<endl;
-		for (int i = 0; i < 8; i++) {
-		//find King coor
-			for (int j = 0; j < 8; j++) {
-				if (!theChessBoard[i][j]) continue;
-				if (theChessBoard[i][j]->getColor() == 0 && 
-					theChessBoard[i][j]->getType() == 'K') {
-					//cout<<"king"<<endl;
-	 				Kcoor = theChessBoard[i][j]->getCoor();
-					//cout<<": "<<Kcoor.x<<Kcoor.y<<endl;
-	 			}
-	 		}
-	 	}
-
-	 	for (int i = 0; i < 8; i++) {
-	 		for (int j = 0; j < 8; j++) {
-	 			if (!theChessBoard[i][j]) continue;
-	 			if (theChessBoard[i][j]->getColor() == 1) {
-					//cout<<"ememy"<<theChessBoard[i][j]->getType()<<": "<<i<<" "<<j<<endl;
-	 				vector<Coor> Arange = theChessBoard[i][j]->getAttackRange();
-					//cout<<"getArange"<<endl;
-	 				for (int k = 0; k < Arange.size(); k++) {
-	 					if (Arange[k].x == Kcoor.x && Arange[k].y == Kcoor.y) {
-	 						return true;
-	 					}
-	 				}
-					//cout<<"safe"<<endl;
-	 			}
-	 		}
-	 	}
+		c = 0;
 	} else {
-		//cout<<"bturn"<<endl;
-	 	for (int i = 0; i < 8; i++) {
-	 		for (int j = 0; j < 8; j++) {
-	 			if (!theChessBoard[i][j]) continue;
-	 			if (theChessBoard[i][j]->getColor() == 1 && 
-	 				theChessBoard[i][j]->getType() == 'K') {
-	 				//cout<<"king"<<endl;
-					Kcoor = theChessBoard[i][j]->getCoor();
-	 			}
-	 		}
-	 	}
-
-	 	for (int i = 0; i < 8; i++) {
-	 		for (int j = 0; j < 8; j++) {
-	 			if (!theChessBoard[i][j]) continue;
-	 			if (theChessBoard[i][j]->getColor() == 0) {
-	 				vector<Coor> Arange = theChessBoard[i][j]->getAttackRange();
-	 				for (int k = 0; k < Arange.size(); k++) {
-	 					if (Arange[k].x == Kcoor.x && Arange[k].y == Kcoor.y) {
-	 						return true;
-	 					}
-	 				}
-	 			}
-	 		}
-		}
+		c = 1;
 	}
-	//cout<<"false"<<endl;
+
+	for (int i = 0; i < 8; i++) {
+	//find King coor
+		for (int j = 0; j < 8; j++) {
+			if (!theChessBoard[i][j]) continue;
+			if (theChessBoard[i][j]->getColor() == c && 
+				theChessBoard[i][j]->getType() == 'K') {
+ 				Kcoor = theChessBoard[i][j]->getCoor();
+ 			}
+ 		}
+ 	}
+
+ 	for (int i = 0; i < 8; i++) {
+ 		for (int j = 0; j < 8; j++) {
+ 			if (!theChessBoard[i][j]) continue;
+ 			if (theChessBoard[i][j]->getColor() == (c+1)%2) {
+ 				vector<Coor> Arange = theChessBoard[i][j]->getAttackRange();
+ 				for (int k = 0; k < Arange.size(); k++) {
+ 					if (Arange[k].x == Kcoor.x && Arange[k].y == Kcoor.y) {
+ 						return true;
+ 					}
+ 				}
+ 			}
+ 		}
+ 	}
+
 	return false;
 }
 
@@ -194,7 +166,29 @@ void Board::clearBoard(){
 			notifyView('E', c);
 		}
 	}
+	history.clear();
 }
+
+void Board::undo(bool inter) {
+	wturn = !wturn;
+	history.pop_back();
+	theChessBoard = history.back();
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (!theChessBoard[i][j]) {
+				notifyView('E', Coor{i, j});
+				continue;
+			}
+			theChessBoard[i][j]->makeMove(Coor{i, j});
+			char c = theChessBoard[i][j]->getType();
+			if (theChessBoard[i][j]->getColor() == 1) {
+				c += ('a' - 'A');
+			}
+			if (!inter) notifyView(c, theChessBoard[i][j]->getCoor());
+		}
+	}
+}
+
 
 void Board::initBoard(){
 	for (int i = 0; i < 8; i++) {
@@ -237,6 +231,7 @@ void Board::initBoard(){
 		}
 		theChessBoard.emplace_back(theLine);
 	}
+	history.emplace_back(theChessBoard);
 }
 
 int Board::getBscore() {
@@ -284,11 +279,15 @@ void Board::placePiece(char piece, Coor pos) {
 	theChessBoard[pos.x][pos.y] = cp;
 	if (chessColor == 0) notifyView(piece, pos);
 	else notifyView(piece - 'A' + 'a', pos);
+
+	history.emplace_back(theChessBoard);
 }
 
 void Board::removePiece(Coor pos) {
 	theChessBoard[pos.x][pos.y] = nullptr;
 	notifyView('E', pos);
+
+	history.emplace_back(theChessBoard);
 }
 
 string Board::makeMove(Coor start, Coor dest) {
@@ -306,31 +305,28 @@ string Board::makeMove(Coor start, Coor dest) {
 	cout << "dest: " << dest.x << " " << dest.y << endl;
 	#endif
 
+
+	//check null
 	if (theChessBoard[start.x][start.y] == nullptr) {
 		return "empty";
 	}
 
+	//check if move others chesspiece
 	if ((theChessBoard[start.x][start.y]->getColor() == 1 && wturn) ||
 	    (theChessBoard[start.x][start.y]->getColor() == 0 && (!wturn))) {
 		return "invalid";
 	}
 
-	cout<<theChessBoard[start.x][start.y]->getType()<<endl;
+	//cout<<theChessBoard[start.x][start.y]->getType()<<endl;
 
 	vector<Coor> Arange = theChessBoard[start.x][start.y]->getAttackRange();
 	vector<Coor> Mrange = theChessBoard[start.x][start.y]->getMoveRange();
 	for (int i = 0; i < Arange.size(); i++) {
 		if (Arange[i].x == dest.x && Arange[i].y == dest.y) {
 			theChessBoard[dest.x][dest.y] = nullptr;
-			//cout<<0<<endl;
 			using std::swap;
 			swap(theChessBoard[start.x][start.y], theChessBoard[dest.x][dest.y]);
-			//theChessBoard[dest.x][dest.y] = theChessBoard[start.x][start.y];
-			//cout<<1<<endl;
-			//theChessBoard[start.x][start.y] = nullptr;
-			//cout<<2<<endl;
 			theChessBoard[dest.x][dest.y]->makeMove(dest);
-			//cout<<3<<endl;
 			notifyView('E', start);
 
 			char chess = theChessBoard[dest.x][dest.y]->getType();
@@ -339,6 +335,7 @@ string Board::makeMove(Coor start, Coor dest) {
 			}
 			//notifyView(chess,dest);
 
+			//check invalid here...............................
 			notifyView(chess,theChessBoard[dest.x][dest.y]->getCoor());
 			wturn = !wturn;
 
@@ -352,6 +349,8 @@ string Board::makeMove(Coor start, Coor dest) {
 				cout << endl;
 			}
 			#endif
+
+			history.emplace_back(theChessBoard);
 
 			return "";
 		}
@@ -388,6 +387,8 @@ string Board::makeMove(Coor start, Coor dest) {
 			}
 			#endif
 
+			history.emplace_back(theChessBoard);
+			
 			return "";
 		}
 	}

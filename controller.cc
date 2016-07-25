@@ -153,7 +153,7 @@ void Controller::game() {
 				return;
 			}
 		} else if (cmd == "undo") {
-			board->undo();
+			board->undo(false);
 			board->print();
 		}
 		if (board->isCheckmate()) {
