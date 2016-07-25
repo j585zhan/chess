@@ -63,7 +63,7 @@ bool AI::moveLevel1() {
 	}
 }
 
-void AI::moveLevel2() {}
-void AI::moveLevel3() {}
-void AI::moveLevel4() {}
-int AI::value(ChessPiece *p) {}
+void AI::moveLevel2() {return;}
+void AI::moveLevel3() {return;}
+void AI::moveLevel4() {return;}
+int AI::value(ChessPiece *p) {return 1;}

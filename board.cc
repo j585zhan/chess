@@ -72,7 +72,6 @@ bool Board::isMove(Coor c) {
 	type = curCp->getType();
 	color = curCp->getColor();
 	for (int i = 0; i < history.size(); i++) {
-		cout<<"at least"<<endl;
 		auto cp = history[i][c.x][c.y];
 		if (!cp || 
 			cp->getType() != type ||
@@ -80,7 +79,6 @@ bool Board::isMove(Coor c) {
 			return true;
 		}
 	}
-cout<<"return false"<<endl;
 	return false;
 }
 

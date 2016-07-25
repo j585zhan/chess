@@ -8,7 +8,6 @@
 using namespace std;
 
 Controller::Controller(): presetBoard {false} {
-	// view = make_shared<TextDisplay>();
 	board = make_shared<Board>();
 }
 
@@ -22,8 +21,6 @@ bool Controller::validPlayer(const string &player) {
 	else if (player == "computer4") return true;
 	else return false;
 }
-
-//kqbrnp
 
 bool Controller::validPiece(const string &piece) {
 	string s;
