@@ -19,7 +19,7 @@ clean:
 	rm ${OBJECTS} ${EXEC} ${DEPENDS}
 
 graphic: 
-	make EXTRA="-DGRAPHIC"
+	make EXTRA="-DGRAPHIC -DTEXT"
 
 unicode:
 	make EXTRA="-DUNICODE"
