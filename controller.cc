@@ -110,17 +110,21 @@ void Controller::setup(istream &is, bool showStep) {
 	if (!showStep) board->print();
 }
 
+void Controller::printTurn(bool isWhite) {
+	if (isWhite) cout << "White player's turn" << endl;
+	else cout << "Black player's turn" << endl;
+}
+
 void Controller::game() {
 	if (!presetBoard) board->initBoard();
 	board->print();
+	printTurn(board->wturn);
 	string cmd;
 	while (cin >> cmd) {
 		if (board->isStalemate()) {
 			cout << "Stalemate!" << endl;
 			break;
 		}
-		// if (board->wturn) cout << "White player's turn" << endl;
-		// else cout << "Black player's turn" << endl;
 		if (cmd == "move") {
 			string start, dest;
 			cin >> start >> dest;
@@ -134,6 +138,7 @@ void Controller::game() {
 					continue;
 				}
 				board->print();
+				printTurn(board->wturn);
 				if (board->isCheck()) {
 					if (board->wturn) {
 						cout << "White is in check" << endl;

@@ -14,6 +14,7 @@ class Controller {
 	bool validPiece(const std::string &piece);
 	bool validPos(const std::string &pos);
 	Coor toCoor(const std::string &pos);
+	void printTurn(bool isWhite);
 	void setup(std::istream &is, bool showStep);
 	void game();
 	std::string getPromotion();

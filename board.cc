@@ -171,6 +171,7 @@ void Board::clearBoard(){
 
 void Board::undo(bool inter) {
 	wturn = !wturn;
+	if (history.size() == 1) return;
 	history.pop_back();
 	theChessBoard = history.back();
 	for (int i = 0; i < 8; i++) {
