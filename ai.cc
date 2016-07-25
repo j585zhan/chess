@@ -1,5 +1,6 @@
 #include "ai.h"
 #include "board.h"
+#include "chesspiece.h"
 #include <ctime>
 #include <cstdlib>
 #include <algorithm>
@@ -23,8 +24,10 @@ void AI::makeMove() {
 		moveLevel4();
 	}
 }
-void AI::openingMove();
-void AI::moveLevel1() {
+
+void AI::openingMove() {}
+
+bool AI::moveLevel1() {
 	// Create a vector of number from 1 to 64
 	vector<int> pos;
 	for (int i = 0; i < 64; ++i) {
@@ -34,11 +37,11 @@ void AI::moveLevel1() {
 	srand(time(nullptr));
 	random_shuffle(pos.begin(), pos.end());
 	for (int i = 0; i < 64; ++i) {
-		int x = pos.at() / 8;
-		int y = pos.at() / 8;
-		auto pPiece = board->boardStatus[x][y];
+		int x = pos.at(i) / 8;
+		int y = pos.at(i) / 8;
+		auto pPiece = board->theChessBoard[x][y];
 		if (!pPiece) continue;
-		if (pPiece->getColor != color) continue;
+		if (pPiece->getColor() != color) continue;
 		vector<Coor> allMoves;
 		auto moveR = pPiece->getMoveRange();
 		auto attackR = pPiece->getAttackRange();
@@ -50,11 +53,17 @@ void AI::moveLevel1() {
 		for (int i = 0; i < allMoves.size(); ++i) {
 			table.emplace_back(i);
 		}
-		
+		random_shuffle(table.begin(), table.end());
+		for (int i = 0; i < allMoves.size(); ++i) {
+			if (board->makeMove(pPiece->getCoor(), allMoves.at(table.at(i))) == "") {
+				return true;
+			}
+		}
+		return false;
 	}
 }
 
-void AI::moveLevel2();
-void AI::moveLevel3();
-void AI::moveLevel4();
-int AI::value(ChessPiece *p);
+void AI::moveLevel2() {}
+void AI::moveLevel3() {}
+void AI::moveLevel4() {}
+int AI::value(ChessPiece *p) {}

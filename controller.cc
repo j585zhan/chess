@@ -118,10 +118,6 @@ void Controller::game() {
 	printTurn(board->wturn);
 	string cmd;
 	while (cin >> cmd) {
-		if (board->isStalemate()) {
-			cout << "Stalemate!" << endl;
-			break;
-		}
 		if (cmd == "move") {
 			string start, dest;
 			cin >> start >> dest;
@@ -190,6 +186,10 @@ void Controller::game() {
 			} else {
 				cout << "Checkmate! Black wins!" << endl;
 			}
+			break;
+		}
+		if (board->isStalemate()) {
+			cout << "Stalemate!" << endl;
 			break;
 		}
 		if (board->isCheck()) {

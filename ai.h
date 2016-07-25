@@ -6,15 +6,15 @@ class ChessPiece;
 class Board;
 
 class AI {
-  Board *board;
   int level;
   int color;
+  Board *board;
 public:
-  AI(int level);
+  AI(int level, int color, Board *board);
   ~AI();
   void makeMove();
   void openingMove();
-  void moveLevel1();
+  bool moveLevel1();
   void moveLevel2();
   void moveLevel3();
   void moveLevel4();
