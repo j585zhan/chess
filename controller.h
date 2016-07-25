@@ -2,15 +2,13 @@
 #define __CONTROLLER_H__
 #include <iostream>
 #include <memory>
+#include <board.h>
 
-class Board;
-class View;
 struct Coor;
 
 class Controller {
 	std::shared_ptr<Board> board;
 	bool presetBoard;
-	// std::shared_ptr<View> view;
 	
 	bool validPlayer(const std::string &player);
 	bool validPiece(const std::string &piece);
@@ -23,7 +21,6 @@ public:
 	Controller();
 	~Controller();
 	void play();
-	// void notifyView(const char piece, const Coor c);
 };
 
 #endif

@@ -1,17 +1,15 @@
-#ifndef __GRAPHDISPLAY_H__
-#define __GRAPHDISPLAY_H__
+#ifndef __GRAPHICDISPLAY_H__
+#define __GRAPHICDISPLAY_H__
 
 #include "view.h"
 #include <vector>
-
-struct Coor;
+#include "xwindow/window.h"
 
 class GraphicDisplay: public View {
-	std::vector<std::vector<char>> theDisplay;
+	Xwindow w;
 public:
-	TextDisplay();
-	~TextDisplay();
-	void notify(char piece, Coor coor) override;
+	GraphicDisplay();
+	~GraphicDisplay();
 	void print() override;
 };
 

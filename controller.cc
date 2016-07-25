@@ -4,8 +4,6 @@
 #include <sstream>
 #include <fstream>
 #include "board.h"
-#include "view.h"
-#include "textdisplay.h"
 
 using namespace std;
 
@@ -117,13 +115,6 @@ void Controller::game() {
 	board->print();
 	string cmd;
 	while (cin >> cmd) {
-		if (board->isCheck()) {
-			if (board->wturn) {
-				cout << "White is in check" << endl;
-			} else {
-				cout << "Black is in check" << endl;
-			}
-		}
 		if (board->isStalemate()) {
 			cout << "Stalemate!" << endl;
 			break;
@@ -143,6 +134,13 @@ void Controller::game() {
 					continue;
 				}
 				board->print();
+				if (board->isCheck()) {
+					if (board->wturn) {
+						cout << "White is in check" << endl;
+					} else {
+						cout << "Black is in check" << endl;
+					}
+				}
 			} else {
 				cout << "Incorrect usage of move, check your coordinates again" << endl;
 			}
