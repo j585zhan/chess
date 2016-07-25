@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include "view.h"
+#include "ai.h"
 
 struct Coor{
   int x;
@@ -14,6 +15,8 @@ class ChessPiece;
 
 class Board {
   std::vector<std::vector<std::shared_ptr<ChessPiece>>> theChessBoard;  // The actual Board.
+  std::shared_ptr<AI> ai1;
+  std::shared_ptr<AI> ai2;
   double bScore;//up  = 1
   double wScore;//down  = 0
   std::vector<std::vector<std::vector<std::shared_ptr<ChessPiece>>>> history;
@@ -52,10 +55,10 @@ public:
   bool validBoard();
   bool needPromotion();
   void promote(char type);
-  // TODO: FUCK THIS SHIT
   bool isStalemate();
-  void setPlayer(const std::string& s1, const std::string& s2) {}
+  void setPlayer(const std::string &p1, const std::string &p2);
 
+  friend class AI;
 };
 
 #endif

@@ -5,7 +5,7 @@ CXXFLAGS += ${EXTRA}
 EXEC = chess
 OBJECTS = main.o view.o unicodedisplay.o textdisplay.o board.o chesspiece.o controller.o \
 			piece/bishop.o piece/king.o piece/knight.o piece/pawn.o \
-			piece/queen.o piece/rook.o graphicdisplay.o xwindow/window.o
+			piece/queen.o piece/rook.o graphicdisplay.o xwindow/window.o ai.o
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}

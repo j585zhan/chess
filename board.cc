@@ -12,6 +12,7 @@
 #include "piece/queen.h"
 #include "view.h"
 #include "textdisplay.h"
+#include "ai.h"
 
 #ifdef TEXT
 #include "textdisplay.h"
@@ -42,6 +43,8 @@ Board::Board() {
 	bScore = 0; 
 	wScore = 0;
 	wturn = true;
+	ai1 = nullptr;
+	ai2 = nullptr;
 }
 
 Board::~Board(){}
@@ -302,27 +305,29 @@ void Board::placePiece(char piece, Coor pos) {
 	theChessBoard[pos.x][pos.y] = cp;
 	if (chessColor == 0) notifyView(piece, pos);
 	else notifyView(piece - 'A' + 'a', pos);
+	history.emplace_back(theChessBoard);
 }
 
 void Board::removePiece(Coor pos) {
 	theChessBoard[pos.x][pos.y] = nullptr;
 	notifyView('E', pos);
+	history.emplace_back(theChessBoard);
 }
 
 string Board::makeMove(Coor start, Coor dest) {
-	// #ifdef DEBUG
-	// int size = 8;
-	// for (int i = size - 1; i >= 0; --i) {
-	// 	cout << i + 1<< ' ';
-	// 	for (int j = 0; j < size; ++j) {
-	// 		if (!theChessBoard[j][i]) cout << " ";
-	// 		else cout << theChessBoard[j][i]->getType();
-	// 	}
-	// 	cout << endl;
-	// }
-	// cout << "start: " << start.x << " " << start.y << endl;
-	// cout << "dest: " << dest.x << " " << dest.y << endl;
-	// #endif
+	#ifdef DEBUG
+	int size = 8;
+	for (int i = size - 1; i >= 0; --i) {
+		cout << i + 1<< ' ';
+		for (int j = 0; j < size; ++j) {
+			if (!theChessBoard[j][i]) cout << " ";
+			else cout << theChessBoard[j][i]->getType();
+		}
+		cout << endl;
+	}
+	cout << "start: " << start.x << " " << start.y << endl;
+	cout << "dest: " << dest.x << " " << dest.y << endl;
+	#endif
 
 	//check null
 	if (theChessBoard[start.x][start.y] == nullptr) {
@@ -475,6 +480,17 @@ bool Board::needPromotion() {
 			return true;
 		}
 	}
-	cout << "failed" << endl;
 	return false;
+}
+
+void Board::setPlayer(const string &p1, const string &p2) {
+	if (p1 == "human" && p2 == "human") return;
+	if (p1 != "human") {
+		int ai1level = p1[p1.length() - 1] - '0';
+		ai1 = make_shared<AI>(ai1level, 0, this);
+	}
+	if (p2 != "human") {
+		int ai2Level = p2[p2.length() - 1] - '0';
+		ai2 = make_shared<AI>(ai2Level, 1, this);
+	}
 }
