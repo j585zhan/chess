@@ -43,6 +43,7 @@ public:
   std::shared_ptr<ChessPiece> getPos(Coor c);
   int getBscore();
   int getWscore();
+  void saveHistory();
     //std::vector<std::string> *getHistory();
 
 

@@ -13,17 +13,32 @@
 #include "view.h"
 #include "textdisplay.h"
 
+#ifdef TEXT
+#include "textdisplay.h"
+#endif
+
 #ifdef GRAPHIC
 #include "graphicdisplay.h"
 #endif
 
+#ifdef UNICODE
+#include "unicodedisplay.h"
+#endif
+
+
 using namespace std;
 
 Board::Board() {
+	#ifdef TEXT
 	VecView.emplace_back(make_shared<TextDisplay>());
+    #endif
 	#ifdef GRAPHIC
 	VecView.emplace_back(make_shared<GraphicDisplay>());
 	#endif
+	#ifdef UNICODE
+	VecView.emplace_back(make_shared<UnicodeDisplay>());
+	#endif
+
 	bScore = 0; 
 	wScore = 0;
 	wturn = true;
@@ -157,6 +172,7 @@ void Board::clearBoard(){
 }
 
 void Board::undo(bool inter) {
+	if (history.size() == 1) return;
 	wturn = !wturn;
 	history.pop_back();
 	theChessBoard = history.back();
@@ -266,15 +282,11 @@ void Board::placePiece(char piece, Coor pos) {
 	theChessBoard[pos.x][pos.y] = cp;
 	if (chessColor == 0) notifyView(piece, pos);
 	else notifyView(piece - 'A' + 'a', pos);
-
-	history.emplace_back(theChessBoard);
 }
 
 void Board::removePiece(Coor pos) {
 	theChessBoard[pos.x][pos.y] = nullptr;
 	notifyView('E', pos);
-
-	history.emplace_back(theChessBoard);
 }
 
 string Board::makeMove(Coor start, Coor dest) {
@@ -396,4 +408,8 @@ string Board::makeMove(Coor start, Coor dest) {
 
 shared_ptr<ChessPiece> Board::getPos(Coor c) {
 	return theChessBoard[c.x][c.y];
+}
+
+void Board::saveHistory() {
+	history.emplace_back(theChessBoard);
 }

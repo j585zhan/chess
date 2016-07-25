@@ -101,6 +101,7 @@ void Controller::setup(istream &is, bool showStep) {
 		} else if (cmd == "done") {
 			if (board->validBoard()) {
 				cout << "Board setup completed" << endl;
+				board->saveHistory();
 				break;
 			} else {
 				cout << "Invalid Board, please double check" << endl;
