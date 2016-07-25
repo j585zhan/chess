@@ -24,15 +24,15 @@ vector<Coor> King::getAttackRange() {
 		Coor oneMove = {coor.x - 1, coor.y - 1};
 		attackRange.emplace_back(oneMove);
 	}
-	if (coor.y + 1 >= 0 && coor.x + 1 >= 0 && !board->isEmpty(coor.x + 1, coor.y + 1)) {
+	if (coor.y + 1 < 8 && coor.x + 1 < 8 && !board->isEmpty(coor.x + 1, coor.y + 1)) {
 		Coor oneMove = {coor.x + 1, coor.y + 1};
 		attackRange.emplace_back(oneMove);
 	}
-	if (coor.y + 1 >= 0 && coor.x - 1 >= 0 && !board->isEmpty(coor.x - 1, coor.y + 1)) {
+	if (coor.y + 1 < 8 && coor.x - 1 >= 0 && !board->isEmpty(coor.x - 1, coor.y + 1)) {
 		Coor oneMove = {coor.x - 1, coor.y + 1};
 		attackRange.emplace_back(oneMove);
 	}
-	if (coor.x + 1 >= 0 && !board->isEmpty(coor.x + 1, coor.y)) {
+	if (coor.x + 1 < 8 && !board->isEmpty(coor.x + 1, coor.y)) {
 		Coor oneMove = {coor.x + 1, coor.y};
 		attackRange.emplace_back(oneMove);
 	}
@@ -40,7 +40,7 @@ vector<Coor> King::getAttackRange() {
 		Coor oneMove = {coor.x - 1, coor.y};
 		attackRange.emplace_back(oneMove);
 	}
-	if (coor.y + 1 >= 0 && !board->isEmpty(coor.x, coor.y + 1)) {
+	if (coor.y + 1 < 8 && !board->isEmpty(coor.x, coor.y + 1)) {
 		Coor oneMove = {coor.x, coor.y + 1};
 		attackRange.emplace_back(oneMove);
 	}

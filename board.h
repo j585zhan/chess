@@ -16,7 +16,7 @@ class Board {
   std::vector<std::vector<std::shared_ptr<ChessPiece>>> theChessBoard;  // The actual Board.
   double bScore;//up  = 1
   double wScore;//down  = 0
-  //std::std::vector<std::string> history;
+  std::vector<std::vector<std::vector<std::shared_ptr<ChessPiece>>>> history;
   
 public:
   std::vector<std::shared_ptr<View>> VecView;
@@ -35,6 +35,7 @@ public:
   int resign(); // we need it here
   void placePiece(char piece, Coor pos);
   void removePiece(Coor pos);
+  void undo(bool inter);
   // makemove(start, dest) return "empty" if no piece at start, return invalid if
   //   the move is invlid
   //std::vector<Coor> Board::isSafe(Coor start, std::vector<Coor> dest);

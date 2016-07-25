@@ -153,7 +153,8 @@ void Controller::game() {
 				return;
 			}
 		} else if (cmd == "undo") {
-			// place implemation of undo here
+			board->undo(false);
+			board->print();
 		}
 		if (board->isCheckmate()) {
 			int result = board->resign(); //0 means white resign, 1 means black resign
