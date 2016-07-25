@@ -384,6 +384,7 @@ string Board::makeMove(Coor start, Coor dest) {
 	}
 
 	for (int i = 0; i < Mrange.size(); i++) {
+		bool status = isCheck();
 		if (Mrange[i].x == dest.x && Mrange[i].y == dest.y) {
 			int distance = dest.x - start.x;
 			char chess = theChessBoard[start.x][start.y]->getType();
@@ -414,7 +415,7 @@ string Board::makeMove(Coor start, Coor dest) {
 			
 			if (chess == 'K' || chess == 'k') {
 				if ( distance == 2) {
-					if (isCheck()) {
+					if (status) {
 						wturn = !wturn;
 						undo(false);
 						return "invalid";
@@ -424,7 +425,7 @@ string Board::makeMove(Coor start, Coor dest) {
 					placePiece(after, Coor{dest.x - 1, dest.y});
 				}
 				if ( distance == -2) {
-					if (isCheck()) {
+					if (status) {
 						wturn = !wturn;
 						undo(false);
 						return "invalid";
