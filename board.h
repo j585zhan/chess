@@ -47,8 +47,8 @@ public:
     //std::vector<std::string> *getHistory();
 
 
+  bool validBoard();
   // TODO: FUCK THIS SHIT
-  bool validBoard() { return true; }
   bool isStalemate() { return false; }
   void setPlayer(const std::string& s1, const std::string& s2) {}
 

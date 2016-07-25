@@ -250,10 +250,11 @@ int Board::getWscore() {
 int Board::resign() {
 	if (wturn) {
 		scoreUpdate(1, 1);
-		
+		wturn = true;
 		return 0;
 	}
 	scoreUpdate(0, 1);
+	wturn = true;
 	return 1; 
 }
 
@@ -412,4 +413,37 @@ shared_ptr<ChessPiece> Board::getPos(Coor c) {
 
 void Board::saveHistory() {
 	history.emplace_back(theChessBoard);
+}
+
+bool Board::validBoard() {
+	int numWKing = 0, numBKing = 0;
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 8; ++j) {
+			auto pPiece = theChessBoard[i][j];
+			if (!pPiece) continue;
+			// Count the number of Kings
+			if (pPiece->getType() == 'K') {
+				if (pPiece->getColor() == 0) numWKing++;
+				if (pPiece->getColor() == 1) numBKing++;
+			}
+			// Is there any pawn on the first line or last line
+			if (j == 0 || j == 7) {
+				if (pPiece->getType() == 'P') {
+					return false;
+				}
+			}
+		}
+	}
+	if (numBKing != 1 || numWKing != 1) return false;
+	// Neither King is in check
+	if (isCheck()) return false;
+	// Switch turn and check is the King is in Check
+	wturn = !wturn;
+	if (isCheck()) {
+		wturn = !wturn; // Switch back and return false
+		return false;
+	}
+	// Switch back and return true
+	wturn = !wturn;
+	return true;
 }

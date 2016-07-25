@@ -76,14 +76,6 @@ void Controller::setup(istream &is, bool showStep) {
 			if (validPos(pos)) {
 				Coor c = toCoor(pos);
 				board->removePiece(c);
-				// char emptyPosColor;
-				// if (c.x % 2 == 0) {
-				// 	if (c.y % 2 == 0) emptyPosColor = '_';
-				// 	else emptyPosColor = ' ';
-				// } else {
-				// 	if (c.y % 2 == 0) emptyPosColor = ' ';
-				// 	else emptyPosColor = '_';
-				// }
 				if (showStep) board->print();
 			} else {
 				cout << "Invalid - usage, check your coordinates" << endl;
@@ -93,8 +85,10 @@ void Controller::setup(istream &is, bool showStep) {
 			is >> color;
 			if (color == "black"){
 				board->wturn = false;
+				cout << "Black player will move first" << endl;
 			} else if (color == "white") {
 				board->wturn = true;
+				cout << "White player will move first" << endl;
 			} else {
 				cout << "Invalid color" << endl;
 			}
@@ -106,6 +100,8 @@ void Controller::setup(istream &is, bool showStep) {
 			} else {
 				cout << "Invalid Board, please double check" << endl;
 			}
+		} else if (cmd != EOF) {
+			cout << "Invalid setup command" << endl;
 		}
 	}
 	if (!showStep) board->print();
@@ -161,6 +157,8 @@ void Controller::game() {
 		} else if (cmd == "undo") {
 			board->undo(false);
 			board->print();
+		} else if (cmd != EOF) {
+			cout << "Invalid move command" << endl;
 		}
 		if (board->isCheckmate()) {
 			int result = board->resign(); //0 means white resign, 1 means black resign
