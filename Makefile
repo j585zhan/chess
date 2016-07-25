@@ -1,6 +1,7 @@
 CXX = g++-5
 EXTRA = -DTEXT
 CXXFLAGS = -g -std=c++14 -Wall -Wno-sign-compare -MMD -Werror=vla -I .
+CXXFLAGS += ${EXTRA}
 EXEC = chess
 OBJECTS = main.o view.o unicodedisplay.o textdisplay.o board.o chesspiece.o controller.o \
 			piece/bishop.o piece/king.o piece/knight.o piece/pawn.o \

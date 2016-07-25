@@ -21,7 +21,7 @@
 #endif
 
 #ifdef UNICODE
-#include "unicode.h"
+#include "unicodedisplay.h"
 #endif
 
 using namespace std;
