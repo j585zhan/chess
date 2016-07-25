@@ -64,12 +64,12 @@ bool Board::isEmpty(int x, int y) {
 bool Board::isMove(Coor c) {
 	auto curCp = theChessBoard[c.x][c.y];
 	if (!curCp) return true;
-
 	char type;
 	int color;
 	type = curCp->getType();
 	color = curCp->getColor();
 	for (int i = 0; i < history.size(); i++) {
+		cout<<"at least"<<endl;
 		auto cp = history[i][c.x][c.y];
 		if (!cp || 
 			cp->getType() != type ||
@@ -77,6 +77,7 @@ bool Board::isMove(Coor c) {
 			return true;
 		}
 	}
+cout<<"return false"<<endl;
 	return false;
 }
 
@@ -475,6 +476,5 @@ bool Board::needPromotion() {
 			return true;
 		}
 	}
-	cout << "failed" << endl;
 	return false;
 }
