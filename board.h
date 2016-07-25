@@ -37,6 +37,7 @@ public:
   void removePiece(Coor pos);
   // makemove(start, dest) return "empty" if no piece at start, return invalid if
   //   the move is invlid
+  //std::vector<Coor> Board::isSafe(Coor start, std::vector<Coor> dest);
   std::string makeMove(Coor start, Coor dest);
   int getBscore();
   int getWscore();
