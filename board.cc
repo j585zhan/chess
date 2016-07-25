@@ -410,6 +410,12 @@ string Board::makeMove(Coor start, Coor dest) {
 
 			history.emplace_back(theChessBoard);
 			
+			if (chess == 'K') {
+				if (dest.x - start.x == 2) {
+					makeMove(Coor{dest.x + 1, dest.y}, Coor{start.x + 1, start.y});
+				}
+			}
+			
 			if (isCheck()) {
 				wturn = !wturn;
 				undo(true);
