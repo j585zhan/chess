@@ -36,6 +36,7 @@ public:
   void initBoard();
   void notifyView(char piece, Coor c);
   void print();
+  bool castling(Coor start, Coor dest);
   int resign(); // we need it here
   void placePiece(char piece, Coor pos);
   void removePiece(Coor pos);
