@@ -36,6 +36,7 @@ public:
   void placePiece(char piece, Coor pos);
   void removePiece(Coor pos);
   void undo(bool inter);
+  bool isMove(Coor c);
   // makemove(start, dest) return "empty" if no piece at start, return invalid if
   //   the move is invlid
   //std::vector<Coor> Board::isSafe(Coor start, std::vector<Coor> dest);
@@ -49,7 +50,7 @@ public:
 
   bool validBoard();
   // TODO: FUCK THIS SHIT
-  bool isStalemate() { return false; }
+  bool isStalemate();
   void setPlayer(const std::string& s1, const std::string& s2) {}
 
 };

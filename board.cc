@@ -61,52 +61,58 @@ bool Board::isEmpty(int x, int y) {
 	return false;
 }
 
+bool Board::isMove(Coor c) {
+	auto curCp = theChessBoard[c.x][c.y];
+	if (!curCp) return true;
+
+	char type;
+	int color;
+	type = curCp->getType();
+	color = curCp->getColor();
+	for (int i = 0; i < history.size(); i++) {
+		auto cp = history[i][c.x][c.y];
+		if (!cp || 
+			cp->getType() != type ||
+			cp->getColor() != color) {
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Board::isCheckmate(){
-// 	vector<Coor> Mrange;
-// 	Coor Kcoor;
-// 	int Kcolor;
-// 	if (wturn) {
-// 		Kcolor = 0;
-// 	} else {
-// 		Kcolor = 1;
-// 	}
-// 	for (int i = 0; i < 8; i++) {
-// 		for (int j = 0; j < 8; j++) {
-// 			if (!theChessBoard[i][j]) continue;
-// 			if (theChessBoard[i][j]->getColor() == Kcolor && 
-// 				theChessBoard[i][j]->getType() == 'K') {
-// 				Mrange = theChessBoard[i][j]->getMoveRange();
-// 				//for (int k = 0; k < Mrange.size(); k++) {
-// 				//	cout<<"King range: "<<Mrange[k].x<<", "<<Mrange[k].y<<endl;
-// 				//}
-// 			}
-// 		}
-// 	}
-// 	cout<<"h1"<<endl;
-// 	for (int i = 0; i < 8; i++) {
-// 		for (int j = 0; j < 8; j++) {
-// //			cout<<i<<j<<endl;
-// 			if (!theChessBoard[i][j]) continue;
-// 			if (theChessBoard[i][j]->getColor() == (Kcolor+1)%2) {
-// 				//cout<<" enemy "<<endl;
-// 				vector<Coor> Arange = theChessBoard[i][j]->getAttackRange();
-// 				for (int a = 0; a < Arange.size(); a++) {
-// 					//cout<<Arange[a].x<<", "<<Arange[a].y<<endl;
-// 					for (int b = 0; b < Mrange.size(); b++) {
-// 						//cout<<Mrange[b].x<<" mrange "<<Mrange[b].y<<endl;
-// 						if (Mrange[b].x == Arange[a].x && Mrange[b].y == Arange[a].y) {
-// 							cout<<"in"<<endl;
-// 							Mrange.erase(Mrange.begin()+b);
-// 							break;
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
-// 	cout<<"haha"<<endl;
+	vector<Coor> Mrange;
+	Coor Kcoor;
+	int Kcolor;
+	if (wturn) {
+		Kcolor = 0;
+	} else {
+		Kcolor = 1;
+	}
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			auto pChessPiece = theChessBoard[i][j];
+			if (!pChessPiece) continue;
+			if (pChessPiece->getColor() == Kcolor && 
+				pChessPiece->getType() == 'K') {
+				Kcoor = pChessPiece->getCoor();
+				Mrange = pChessPiece->getMoveRange();
+			}
+		}
+	}
+	for (int i = 0; i < Mrange.size(); i++) {
+		if (makeMove(Kcoor, Mrange[i]) != "invalid") {//here!!!!!!!
+			undo(false);
+			cout<<"can move to: "<<Mrange[i].x<<Mrange[i].y<<endl;;
+			return false;
+		}
+	}
 	return isCheck();
-	//return (isCheck() && (Mrange.size() == 0));
+}
+
+bool Board::isStalemate() {
+	return false;
+	//return !isCheck() && isCheckmate();
 }
 
 bool Board::isCheck(){
