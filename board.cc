@@ -11,19 +11,32 @@
 #include "piece/pawn.h"
 #include "piece/queen.h"
 #include "view.h"
+
+#ifdef TEXT
 #include "textdisplay.h"
+#endif
 
 #ifdef GRAPHIC
 #include "graphicdisplay.h"
 #endif
 
+#ifdef UNICODE
+#include "unicode.h"
+#endif
+
 using namespace std;
 
 Board::Board() {
+	#ifdef TEXT
 	VecView.emplace_back(make_shared<TextDisplay>());
+	#endif
 	#ifdef GRAPHIC
 	VecView.emplace_back(make_shared<GraphicDisplay>());
 	#endif
+	#ifdef UNICODE
+	VecView.emplace_back(make_shared<UnicodeDisplay>());
+	#endif
+
 	bScore = 0; 
 	wScore = 0;
 	wturn = true;
