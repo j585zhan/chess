@@ -13,21 +13,23 @@ AI::AI(int level, int color, Board *board): level{level},
 
 AI::~AI() {}
 
-void AI::makeMove() {
+int AI::makeMove() {
 	if (level == 1) {
-		moveLevel1();
+		return moveLevel1();
 	} else if (level == 2) {
-		moveLevel2();
+		return moveLevel2();
 	} else if (level == 3) {
-		moveLevel3();
+		return moveLevel3();
 	} else if (level == 4) {
-		moveLevel4();
+		return moveLevel4();
+	} else {
+		return 0;
 	}
 }
 
 void AI::openingMove() {}
 
-bool AI::moveLevel1() {
+int AI::moveLevel1() {
 	// Create a vector of number from 1 to 64
 	vector<int> pos;
 	for (int i = 0; i < 64; ++i) {
@@ -38,7 +40,7 @@ bool AI::moveLevel1() {
 	random_shuffle(pos.begin(), pos.end());
 	for (int i = 0; i < 64; ++i) {
 		int x = pos.at(i) / 8;
-		int y = pos.at(i) / 8;
+		int y = pos.at(i) % 8;
 		auto pPiece = board->theChessBoard[x][y];
 		if (!pPiece) continue;
 		if (pPiece->getColor() != color) continue;
@@ -56,14 +58,14 @@ bool AI::moveLevel1() {
 		random_shuffle(table.begin(), table.end());
 		for (int i = 0; i < allMoves.size(); ++i) {
 			if (board->makeMove(pPiece->getCoor(), allMoves.at(table.at(i))) == "") {
-				return true;
+				return 1;
 			}
 		}
-		return false;
 	}
+	return 0;
 }
 
-void AI::moveLevel2() {return;}
-void AI::moveLevel3() {return;}
-void AI::moveLevel4() {return;}
+int AI::moveLevel2() {return 2;}
+int AI::moveLevel3() {return 3;}
+int AI::moveLevel4() {return 4;}
 int AI::value(ChessPiece *p) {return 1;}

@@ -116,52 +116,62 @@ void Controller::game() {
 	string cmd;
 	while (cin >> cmd) {
 		if (cmd == "move") {
-			string start, dest;
-			cin >> start >> dest;
-			if (validPos(start) && validPos(dest)) {
-				string result = board->makeMove(toCoor(start), toCoor(dest));
-				if (result == "empty") {
-					cout << "No valid piece at chosen position" << endl;
-					continue;
-				} else if (result == "invalid") {
-					cout << "Invalid move" << endl;
-					continue;
-				}
+			// check if it is AI
+			if (board->wturn && board->aiW) {
+				cout << board->aiW->makeMove() << endl;
 				board->print();
-				if (board->needPromotion()) {
-					string choice;
-					char type;
-					board->wturn = !board->wturn;
-					cout << "Promote to rook, knight, bishop or queen?" << endl;
-					while (cin >> choice) {
-						if (choice == "rook") {
-							if (board->wturn) type = 'R';
-							else type = 'r';
-							break;
-						} else if (choice == "knight") {
-							if (board->wturn) type = 'N';
-							else type = 'n';
-							break;
-						} else if (choice == "bishop") 	{
-							if (board->wturn) type = 'B';
-							else type = 'b';
-							break;
-						} else if (choice == "queen") {
-							if (board->wturn) type = 'Q';
-							else type = 'q';
-							break;
-						} else if (!cin.eof()) {
-							cout << "Invalid choice, type rook, knight, bishop or queen" << endl;
-						}
-					}
-					board->placePiece(type, toCoor(dest));
-					board->wturn = !board->wturn;
-					board->print();
-				}
-				printTurn(board->wturn);
+			} else if (!board->wturn && board->aiB) {
+				cout << board->aiB->makeMove() << endl;
+				board->print();
 			} else {
-				cout << "Incorrect usage of move, check your coordinates again" << endl;
+				string start, dest;
+				cin >> start >> dest;
+				if (validPos(start) && validPos(dest)) {
+					string result = board->makeMove(toCoor(start), toCoor(dest));
+					if (result == "empty") {
+						cout << "No valid piece at chosen position" << endl;
+						continue;
+					} else if (result == "invalid") {
+						cout << "Invalid move" << endl;
+						continue;
+					}
+					board->print();
+					if (board->needPromotion()) {
+						string choice;
+						char type;
+						board->wturn = !board->wturn;
+						cout << "Promote to rook, knight, bishop or queen?" << endl;
+						while (cin >> choice) {
+							if (choice == "rook") {
+								if (board->wturn) type = 'R';
+								else type = 'r';
+								break;
+							} else if (choice == "knight") {
+								if (board->wturn) type = 'N';
+								else type = 'n';
+								break;
+							} else if (choice == "bishop") 	{
+								if (board->wturn) type = 'B';
+								else type = 'b';
+								break;
+							} else if (choice == "queen") {
+								if (board->wturn) type = 'Q';
+								else type = 'q';
+								break;
+							} else if (!cin.eof()) {
+								cout << "Invalid choice, type rook, knight, bishop or queen" << endl;
+							}
+						}
+						board->placePiece(type, toCoor(dest));
+						board->wturn = !board->wturn;
+						board->print();
+					}
+					printTurn(board->wturn);
+				} else {
+					cout << "Incorrect usage of move, check your coordinates again" << endl;
+				}
 			}
+			
 		} else if (cmd == "resign") {
 			if (!board->resign()) {
 				cout << "Black wins!" << endl;

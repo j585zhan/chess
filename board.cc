@@ -43,8 +43,8 @@ Board::Board() {
 	bScore = 0; 
 	wScore = 0;
 	wturn = true;
-	ai1 = nullptr;
-	ai2 = nullptr;
+	aiW = nullptr;
+	aiB = nullptr;
 }
 
 Board::~Board(){}
@@ -485,11 +485,11 @@ bool Board::needPromotion() {
 void Board::setPlayer(const string &p1, const string &p2) {
 	if (p1 == "human" && p2 == "human") return;
 	if (p1 != "human") {
-		int ai1level = p1[p1.length() - 1] - '0';
-		ai1 = make_shared<AI>(ai1level, 0, this);
+		int aiWlevel = p1[p1.length() - 1] - '0';
+		aiW = make_shared<AI>(aiWlevel, 0, this);
 	}
 	if (p2 != "human") {
-		int ai2Level = p2[p2.length() - 1] - '0';
-		ai2 = make_shared<AI>(ai2Level, 1, this);
+		int aiBLevel = p2[p2.length() - 1] - '0';
+		aiB = make_shared<AI>(aiBLevel, 1, this);
 	}
 }

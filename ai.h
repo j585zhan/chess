@@ -12,12 +12,12 @@ class AI {
 public:
   AI(int level, int color, Board *board);
   ~AI();
-  void makeMove();
+  int makeMove();
   void openingMove();
-  bool moveLevel1();
-  void moveLevel2();
-  void moveLevel3();
-  void moveLevel4();
+  int moveLevel1();
+  int moveLevel2();
+  int moveLevel3();
+  int moveLevel4();
   int value(ChessPiece *p);
 };
 

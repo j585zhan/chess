@@ -15,8 +15,6 @@ class ChessPiece;
 
 class Board {
   std::vector<std::vector<std::shared_ptr<ChessPiece>>> theChessBoard;  // The actual Board.
-  std::shared_ptr<AI> ai1;
-  std::shared_ptr<AI> ai2;
   double bScore;//up  = 1
   double wScore;//down  = 0
   std::vector<std::vector<std::vector<std::shared_ptr<ChessPiece>>>> history;
@@ -24,10 +22,12 @@ class Board {
   
 public:
   std::vector<std::shared_ptr<View>> VecView;
+  bool wturn;
+  std::shared_ptr<AI> aiW;
+  std::shared_ptr<AI> aiB;
 
   Board();
   ~Board();
-  bool wturn;
   void scoreUpdate(int color, double score);
   bool isEmpty(int x, int y);
   bool isCheckmate();
@@ -43,7 +43,6 @@ public:
   bool isMove(Coor c);
   // makemove(start, dest) return "empty" if no piece at start, return invalid if
   //   the move is invlid
-  //std::vector<Coor> Board::isSafe(Coor start, std::vector<Coor> dest);
   std::string makeMove(Coor start, Coor dest);
   std::shared_ptr<ChessPiece> getPos(Coor c);
   int getBscore();
