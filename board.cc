@@ -291,20 +291,19 @@ void Board::removePiece(Coor pos) {
 }
 
 string Board::makeMove(Coor start, Coor dest) {
-	#ifdef DEBUG
-	int size = 8;
-	for (int i = size - 1; i >= 0; --i) {
-		cout << i + 1<< ' ';
-		for (int j = 0; j < size; ++j) {
-			if (!theChessBoard[j][i]) cout << " ";
-			else cout << theChessBoard[j][i]->getType();
-		}
-		cout << endl;
-	}
-	cout << "start: " << start.x << " " << start.y << endl;
-	cout << "dest: " << dest.x << " " << dest.y << endl;
-	#endif
-
+	// #ifdef DEBUG
+	// int size = 8;
+	// for (int i = size - 1; i >= 0; --i) {
+	// 	cout << i + 1<< ' ';
+	// 	for (int j = 0; j < size; ++j) {
+	// 		if (!theChessBoard[j][i]) cout << " ";
+	// 		else cout << theChessBoard[j][i]->getType();
+	// 	}
+	// 	cout << endl;
+	// }
+	// cout << "start: " << start.x << " " << start.y << endl;
+	// cout << "dest: " << dest.x << " " << dest.y << endl;
+	// #endif
 
 	//check null
 	if (theChessBoard[start.x][start.y] == nullptr) {
@@ -366,9 +365,6 @@ string Board::makeMove(Coor start, Coor dest) {
 			theChessBoard[dest.x][dest.y] = theChessBoard[start.x][start.y];
 			theChessBoard[start.x][start.y] = nullptr;
 			notifyView('E', start);
-			//The dest at the last should be ----> theChessBoard[dest.x][dest.y]->getCoor()
-			// you need to check the coorindate of the piece!!!!!
-			// This will work for now but it is the wrong idea
 			char chess = theChessBoard[dest.x][dest.y]->getType();
 			if (theChessBoard[dest.x][dest.y]->getColor() == 1) {
 				chess -= ('A' - 'a');
@@ -446,4 +442,20 @@ bool Board::validBoard() {
 	// Switch back and return true
 	wturn = !wturn;
 	return true;
+}
+
+bool Board::needPromotion() {
+	for (int i = 0; i < 8; ++i) {
+		auto pBottomPiece = theChessBoard[i][0];
+		auto pTopPiece = theChessBoard[i][7];
+		if (pBottomPiece != nullptr && pBottomPiece->getType() == 'P' 
+			&& pBottomPiece->getColor() == 1) {
+			return true;
+		} else if (pTopPiece != nullptr && pTopPiece->getType() == 'P' 
+			&& pTopPiece->getColor() == 0) {
+			return true;
+		}
+	}
+	cout << "failed" << endl;
+	return false;
 }

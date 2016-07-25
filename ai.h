@@ -7,9 +7,10 @@ class Board;
 
 class AI {
   Board *board;
-  int level
+  int level;
+  int color;
 public:
-  AI();
+  AI(int level);
   ~AI();
   void makeMove();
   void openingMove();

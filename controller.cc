@@ -135,14 +135,37 @@ void Controller::game() {
 					continue;
 				}
 				board->print();
-				printTurn(board->wturn);
-				if (board->isCheck()) {
-					if (board->wturn) {
-						cout << "White is in check" << endl;
-					} else {
-						cout << "Black is in check" << endl;
+				if (board->needPromotion()) {
+					string choice;
+					char type;
+					board->wturn = !board->wturn;
+					cout << "Promote to rook, knight, bishop or queen?" << endl;
+					while (cin >> choice) {
+						if (choice == "rook") {
+							if (board->wturn) type = 'R';
+							else type = 'r';
+							break;
+						} else if (choice == "knight") {
+							if (board->wturn) type = 'N';
+							else type = 'n';
+							break;
+						} else if (choice == "bishop") 	{
+							if (board->wturn) type = 'B';
+							else type = 'b';
+							break;
+						} else if (choice == "queen") {
+							if (board->wturn) type = 'Q';
+							else type = 'q';
+							break;
+						} else if (!cin.eof()) {
+							cout << "Invalid choice, type rook, knight, bishop or queen" << endl;
+						}
 					}
+					board->placePiece(type, toCoor(dest));
+					board->wturn = !board->wturn;
+					board->print();
 				}
+				printTurn(board->wturn);
 			} else {
 				cout << "Incorrect usage of move, check your coordinates again" << endl;
 			}
@@ -168,6 +191,13 @@ void Controller::game() {
 				cout << "Checkmate! Black wins!" << endl;
 			}
 			break;
+		}
+		if (board->isCheck()) {
+			if (board->wturn) {
+				cout << "White is in check" << endl;
+			} else {
+				cout << "Black is in check" << endl;
+			}
 		}
 	}
 }

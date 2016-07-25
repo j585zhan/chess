@@ -48,6 +48,8 @@ public:
 
 
   bool validBoard();
+  bool needPromotion();
+  void promote(char type);
   // TODO: FUCK THIS SHIT
   bool isStalemate() { return false; }
   void setPlayer(const std::string& s1, const std::string& s2) {}
