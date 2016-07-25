@@ -17,6 +17,7 @@ class Board {
   double bScore;//up  = 1
   double wScore;//down  = 0
   std::vector<std::vector<std::vector<std::shared_ptr<ChessPiece>>>> history;
+  bool canMove();
   
 public:
   std::vector<std::shared_ptr<View>> VecView;

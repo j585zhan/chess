@@ -80,8 +80,9 @@ bool Board::isMove(Coor c) {
 	return false;
 }
 
-bool Board::isCheckmate(){
+bool Board::canMove(){
 	vector<Coor> Mrange;
+	vector<Coor> Arange;
 	Coor Kcoor;
 	int Kcolor;
 	if (wturn) {
@@ -89,29 +90,41 @@ bool Board::isCheckmate(){
 	} else {
 		Kcolor = 1;
 	}
+
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
 			auto pChessPiece = theChessBoard[i][j];
-			if (!pChessPiece) continue;
-			if (pChessPiece->getColor() == Kcolor && 
-				pChessPiece->getType() == 'K') {
-				Kcoor = pChessPiece->getCoor();
-				Mrange = pChessPiece->getMoveRange();
+			if (!pChessPiece || pChessPiece->getColor() != Kcolor) continue;
+			Mrange = pChessPiece->getMoveRange();
+			Arange = pChessPiece->getAttackRange();
+			Kcoor = pChessPiece->getCoor();
+			//check all moveRange to protect king
+			for (int i = 0; i < Mrange.size(); i++) {
+				if (makeMove(Kcoor, Mrange[i]) != "invalid") {
+					undo(false);
+					return true;
+				}
+			}
+
+			//check all attackRange to protect king
+			for (int i = 0; i < Arange.size(); i++) {
+				if (makeMove(Kcoor, Arange[i]) != "invalid") {
+					undo(false);
+					return true;
+				}
 			}
 		}
 	}
-	for (int i = 0; i < Mrange.size(); i++) {
-		if (makeMove(Kcoor, Mrange[i]) != "invalid") {//here!!!!!!!
-			undo(false);
-			cout<<"can move to: "<<Mrange[i].x<<Mrange[i].y<<endl;;
-			return false;
-		}
-	}
-	return isCheck();
+	return false;
 }
 
 bool Board::isStalemate() {
-	return false;
+	return !canMove() && !isCheck();
+	//return !isCheck() && isCheckmate();
+}
+
+bool Board::isCheckmate() {
+	return !canMove() && isCheck();
 	//return !isCheck() && isCheckmate();
 }
 
