@@ -100,7 +100,7 @@ void Controller::setup(istream &is, bool showStep) {
 			} else {
 				cout << "Invalid Board, please double check" << endl;
 			}
-		} else if (cmd != EOF) {
+		} else if (!cin.eof()) {
 			cout << "Invalid setup command" << endl;
 		}
 	}
@@ -157,7 +157,7 @@ void Controller::game() {
 		} else if (cmd == "undo") {
 			board->undo(false);
 			board->print();
-		} else if (cmd != EOF) {
+		} else if (!cin.eof()) {
 			cout << "Invalid move command" << endl;
 		}
 		if (board->isCheckmate()) {
@@ -191,6 +191,8 @@ void Controller::play() {
 			ifstream ifs;
 			ifs.open(filename);
 			setup(ifs, false);
+		} else if (!cin.eof()) {
+			cout << "Invalid game command" << endl;
 		}
 	}
 	cout << "Final Score:" << endl;
