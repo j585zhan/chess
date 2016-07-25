@@ -114,6 +114,7 @@ void Controller::game() {
 	board->print();
 	printTurn(board->wturn);
 	string cmd;
+	string start, dest;
 	while (cin >> cmd) {
 		if (cmd == "move") {
 			// check if it is AI
@@ -124,7 +125,6 @@ void Controller::game() {
 				cout << board->aiB->makeMove() << endl;
 				board->print();
 			} else {
-				string start, dest;
 				cin >> start >> dest;
 				if (validPos(start) && validPos(dest)) {
 					string result = board->makeMove(toCoor(start), toCoor(dest));
@@ -181,8 +181,14 @@ void Controller::game() {
 				return;
 			}
 		} else if (cmd == "undo") {
-			board->undo(false);
-			board->print();
+			if (board->castling(toCoor(start), toCoor(dest))) {
+				board->undo(false);
+				board->undo(false);
+				board->wturn = !board->wturn;
+			} else {
+				board->undo(false);
+				board->print();
+			}
 		} else if (!cin.eof()) {
 			cout << "Invalid move command" << endl;
 		}
