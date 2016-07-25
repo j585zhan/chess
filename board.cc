@@ -11,32 +11,19 @@
 #include "piece/pawn.h"
 #include "piece/queen.h"
 #include "view.h"
-
-#ifdef TEXT
 #include "textdisplay.h"
-#endif
 
 #ifdef GRAPHIC
 #include "graphicdisplay.h"
 #endif
 
-#ifdef UNICODE
-#include "unicodedisplay.h"
-#endif
-
 using namespace std;
 
 Board::Board() {
-	#ifdef TEXT
 	VecView.emplace_back(make_shared<TextDisplay>());
-	#endif
 	#ifdef GRAPHIC
 	VecView.emplace_back(make_shared<GraphicDisplay>());
 	#endif
-	#ifdef UNICODE
-	VecView.emplace_back(make_shared<UnicodeDisplay>());
-	#endif
-
 	bScore = 0; 
 	wScore = 0;
 	wturn = true;
@@ -171,7 +158,6 @@ void Board::clearBoard(){
 
 void Board::undo(bool inter) {
 	wturn = !wturn;
-	if (history.size() == 1) return;
 	history.pop_back();
 	theChessBoard = history.back();
 	for (int i = 0; i < 8; i++) {
@@ -336,10 +322,6 @@ string Board::makeMove(Coor start, Coor dest) {
 			}
 			//notifyView(chess,dest);
 
-			//check invalid here...............................
-			notifyView(chess,theChessBoard[dest.x][dest.y]->getCoor());
-			wturn = !wturn;
-
 			#ifdef DEBUG
 			for (int i = size - 1; i >= 0; --i) {
 				cout << i + 1<< ' ';
@@ -352,6 +334,15 @@ string Board::makeMove(Coor start, Coor dest) {
 			#endif
 
 			history.emplace_back(theChessBoard);
+
+			if (isCheck()) {
+				wturn = !wturn;
+				undo(true);
+				return "invalid";
+			}
+			
+			wturn = !wturn;
+			notifyView(chess,theChessBoard[dest.x][dest.y]->getCoor());
 
 			return "";
 		}
@@ -369,13 +360,10 @@ string Board::makeMove(Coor start, Coor dest) {
 			if (theChessBoard[dest.x][dest.y]->getColor() == 1) {
 				chess -= ('A' - 'a');
 			}
-
-			wturn = !wturn;
 			
 			
 			theChessBoard[dest.x][dest.y]->makeMove(dest);
 
-			notifyView(chess, theChessBoard[dest.x][dest.y]->getCoor());
 
 			#ifdef DEBUG
 			for (int i = size - 1; i >= 0; --i) {
@@ -390,8 +378,22 @@ string Board::makeMove(Coor start, Coor dest) {
 
 			history.emplace_back(theChessBoard);
 			
+			if (isCheck()) {
+				wturn = !wturn;
+				undo(true);
+				return "invalid";
+			}
+
+			wturn = !wturn;
+
+			notifyView(chess, theChessBoard[dest.x][dest.y]->getCoor());
 			return "";
 		}
 	}
 	return "invalid";
+}
+
+
+shared_ptr<ChessPiece> Board::getPos(Coor c) {
+	return theChessBoard[c.x][c.y];
 }

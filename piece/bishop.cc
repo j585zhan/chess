@@ -21,7 +21,7 @@ vector<Coor> Bishop::getAttackRange() {
 	i = coor.x + 1;
 	j = coor.y + 1;
 	while (i < 8 && j < 8) {
-		if (!board->isEmpty(i, j)) {
+		if (!board->isEmpty(i, j) && board->getPos(Coor{i, j})->getColor() != color) {
 			Coor oneMove = {i, j};
 			attackRange.emplace_back(oneMove);
 			break;
@@ -33,7 +33,7 @@ vector<Coor> Bishop::getAttackRange() {
 	i = coor.x - 1;
 	j = coor.y + 1;
 	while (i >= 0 && j < 8) {
-		if (!board->isEmpty(i, j)) {
+		if (!board->isEmpty(i, j) && board->getPos(Coor{i, j})->getColor() != color) {
 			Coor oneMove = {i, j};
 			attackRange.emplace_back(oneMove);
 			break;
@@ -45,7 +45,7 @@ vector<Coor> Bishop::getAttackRange() {
 	i = coor.x + 1;
 	j = coor.y - 1;
 	while (i < 8 && j >= 0) {
-		if (!board->isEmpty(i, j)) {
+		if (!board->isEmpty(i, j) && board->getPos(Coor{i, j})->getColor() != color) {
 			Coor oneMove = {i, j};
 			attackRange.emplace_back(oneMove);
 			break;
@@ -57,7 +57,7 @@ vector<Coor> Bishop::getAttackRange() {
 	i = coor.x - 1;
 	j = coor.y - 1;
 	while (i >= 0 && j >= 0) {
-		if (!board->isEmpty(i, j)) {
+		if (!board->isEmpty(i, j) && board->getPos(Coor{i, j})->getColor() != color) {
 			Coor oneMove = {i, j};
 			attackRange.emplace_back(oneMove);
 			break;

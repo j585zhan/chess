@@ -17,7 +17,8 @@ void Queen::makeMove(Coor dest) {
 vector<Coor> Queen::getAttackRange() {
 	vector<Coor>attackRange;
 	for (int i = coor.x + 1; i < 8; i++) {
-		if (!board->isEmpty(i, coor.y)) {
+		if (!board->isEmpty(i, coor.y)
+			&& board->getPos(Coor{i, coor.y})->getColor() != color) {
 			Coor oneMove = {i, coor.y};
 			attackRange.emplace_back(oneMove);
 			break;
@@ -25,7 +26,8 @@ vector<Coor> Queen::getAttackRange() {
 	}
 
 	for (int i = coor.x - 1; i >= 0; i--) {
-		if (!board->isEmpty(i, coor.y)) {
+		if (!board->isEmpty(i, coor.y)
+			&& board->getPos(Coor{i, coor.y})->getColor() != color) {
 			Coor oneMove = {i, coor.y};
 			attackRange.emplace_back(oneMove);
 			break;
@@ -33,7 +35,8 @@ vector<Coor> Queen::getAttackRange() {
 	}
 
 	for (int i = coor.y + 1; i < 8; i++) {
-		if (!board->isEmpty(coor.x, i)) {
+		if (!board->isEmpty(coor.x, i)
+			&& board->getPos(Coor{coor.x, i})->getColor() != color) {
 			Coor oneMove = {coor.x, i};
 			attackRange.emplace_back(oneMove);
 			break;
@@ -41,7 +44,8 @@ vector<Coor> Queen::getAttackRange() {
 	}
 
 	for (int i = coor.y - 1; i >= 0; i--) {
-		if (!board->isEmpty(coor.x, i)) {
+		if (!board->isEmpty(coor.x, i)
+			&& board->getPos(Coor{coor.x, i})->getColor() != color) {
 			Coor oneMove = {coor.x, i};
 			attackRange.emplace_back(oneMove);
 			break;
@@ -53,7 +57,8 @@ vector<Coor> Queen::getAttackRange() {
 	i = coor.x + 1;
 	j = coor.y + 1;
 	while (i < 8 && j < 8) {
-		if (!board->isEmpty(i, j)) {
+		if (!board->isEmpty(i, j)
+			&& board->getPos(Coor{i, j})->getColor() != color) {
 			Coor oneMove = {i, j};
 			attackRange.emplace_back(oneMove);
 			break;
@@ -65,7 +70,8 @@ vector<Coor> Queen::getAttackRange() {
 	i = coor.x - 1;
 	j = coor.y + 1;
 	while (i >= 0 && j < 8) {
-		if (!board->isEmpty(i, j)) {
+		if (!board->isEmpty(i, j)
+			&& board->getPos(Coor{i, j})->getColor() != color) {
 			Coor oneMove = {i, j};
 			attackRange.emplace_back(oneMove);
 			break;
@@ -77,7 +83,8 @@ vector<Coor> Queen::getAttackRange() {
 	i = coor.x + 1;
 	j = coor.y - 1;
 	while (i < 8 && j >= 0) {
-		if (!board->isEmpty(i, j)) {
+		if (!board->isEmpty(i, j)
+			&& board->getPos(Coor{i, j})->getColor() != color) {
 			Coor oneMove = {i, j};
 			attackRange.emplace_back(oneMove);
 			break;
@@ -89,7 +96,8 @@ vector<Coor> Queen::getAttackRange() {
 	i = coor.x - 1;
 	j = coor.y - 1;
 	while (i >= 0 && j >= 0) {
-		if (!board->isEmpty(i, j)) {
+		if (!board->isEmpty(i, j)
+			&& board->getPos(Coor{i, j})->getColor() != color) {
 			Coor oneMove = {i, j};
 			attackRange.emplace_back(oneMove);
 			break;

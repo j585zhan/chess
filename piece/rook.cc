@@ -1,6 +1,7 @@
 #include "rook.h"
 #include <string>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -17,32 +18,40 @@ void Rook::makeMove(Coor dest) {
 vector<Coor> Rook::getAttackRange() {
 	vector<Coor>attackRange;
 	for (int i = coor.x + 1; i < 8; i++) {
-		if (!board->isEmpty(i, coor.y)) {
+		if (!board->isEmpty(i, coor.y)
+			&& board->getPos(Coor{i, coor.y})->getColor() != color) {
 			Coor oneMove = {i, coor.y};
+//			cout<<"R: "<<i<<coor.y<<endl;
 			attackRange.emplace_back(oneMove);
 			break;
 		}
 	}
 
 	for (int i = coor.x - 1; i >= 0; i--) {
-		if (!board->isEmpty(i, coor.y)) {
+		if (!board->isEmpty(i, coor.y)
+			&& board->getPos(Coor{i, coor.y})->getColor() != color) {
 			Coor oneMove = {i, coor.y};
+//			cout<<"R: "<<i<<coor.y<<endl;
 			attackRange.emplace_back(oneMove);
 			break;
 		}
 	}
 
 	for (int i = coor.y + 1; i < 8; i++) {
-		if (!board->isEmpty(coor.x, i)) {
+		if (!board->isEmpty(coor.x, i)
+			&& board->getPos(Coor{coor.x, i})->getColor() != color) {
 			Coor oneMove = {coor.x, i};
+//			cout<<"R: "<<i<<coor.y<<endl;
 			attackRange.emplace_back(oneMove);
 			break;
 		}
 	}
 
 	for (int i = coor.y - 1; i >= 0; i--) {
-		if (!board->isEmpty(coor.x, i)) {
+		if (!board->isEmpty(coor.x, i)
+			&& board->getPos(Coor{coor.x, i})->getColor() != color) {
 			Coor oneMove = {coor.x, i};
+//			cout<<"R: "<<i<<coor.y<<endl;
 			attackRange.emplace_back(oneMove);
 			break;
 		}

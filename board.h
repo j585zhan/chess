@@ -40,6 +40,7 @@ public:
   //   the move is invlid
   //std::vector<Coor> Board::isSafe(Coor start, std::vector<Coor> dest);
   std::string makeMove(Coor start, Coor dest);
+  std::shared_ptr<ChessPiece> getPos(Coor c);
   int getBscore();
   int getWscore();
     //std::vector<std::string> *getHistory();
