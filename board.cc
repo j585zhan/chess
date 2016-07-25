@@ -420,7 +420,8 @@ string Board::makeMove(Coor start, Coor dest) {
 						undo(false);
 						return "invalid";
 					}
-					removePiece(Coor{dest.x + 1, dest.y});
+					theChessBoard[dest.x + 1][dest.y] = nullptr;
+					notifyView('E', Coor{dest.x + 1,dest.y});
 					char after = chess + 'r' - 'k';
 					placePiece(after, Coor{dest.x - 1, dest.y});
 				}
@@ -430,7 +431,8 @@ string Board::makeMove(Coor start, Coor dest) {
 						undo(false);
 						return "invalid";
 					}
-					removePiece(Coor{dest.x - 2, dest.y});
+					theChessBoard[dest.x - 2][dest.y] = nullptr;
+					notifyView('E', Coor{dest.x - 2,dest.y});
 					char after = chess + 'r' - 'k';
 					placePiece(after, Coor{dest.x + 1, dest.y});
 				}
@@ -518,4 +520,14 @@ void Board::setPlayer(const string &p1, const string &p2) {
 		int aiBLevel = p2[p2.length() - 1] - '0';
 		aiB = make_shared<AI>(aiBLevel, 1, this);
 	}
+}
+
+
+bool Board::castling(Coor start, Coor dest) {
+	if (theChessBoard[dest.x][dest.y]->getType() == 'K' &&
+		dest.y == start.y &&
+		(dest.x + 2 == start.x) || (dest.x - 2 == start.x)) {
+		return true;
+	}
+	return false;
 }
