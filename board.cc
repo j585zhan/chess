@@ -372,7 +372,7 @@ string Board::makeMove(Coor start, Coor dest) {
 
 			if (isCheck()) {
 				wturn = !wturn;
-				undo(true);
+				undo(false);
 				return "invalid";
 			}
 			
@@ -385,10 +385,12 @@ string Board::makeMove(Coor start, Coor dest) {
 
 	for (int i = 0; i < Mrange.size(); i++) {
 		if (Mrange[i].x == dest.x && Mrange[i].y == dest.y) {
+			int distance = dest.x - start.x;
+			char chess = theChessBoard[start.x][start.y]->getType();
+			//cout<<chess<<": "<<distance<<endl;
 			theChessBoard[dest.x][dest.y] = theChessBoard[start.x][start.y];
 			theChessBoard[start.x][start.y] = nullptr;
 			notifyView('E', start);
-			char chess = theChessBoard[dest.x][dest.y]->getType();
 			if (theChessBoard[dest.x][dest.y]->getColor() == 1) {
 				chess -= ('A' - 'a');
 			}
@@ -410,15 +412,32 @@ string Board::makeMove(Coor start, Coor dest) {
 
 			history.emplace_back(theChessBoard);
 			
-			if (chess == 'K') {
-				if (dest.x - start.x == 2) {
-					makeMove(Coor{dest.x + 1, dest.y}, Coor{start.x + 1, start.y});
+			if (chess == 'K' || chess == 'k') {
+				if ( distance == 2) {
+					if (isCheck()) {
+						wturn = !wturn;
+						undo(false);
+						return "invalid";
+					}
+					removePiece(Coor{dest.x + 1, dest.y});
+					char after = chess + 'r' - 'k';
+					placePiece(after, Coor{dest.x - 1, dest.y});
+				}
+				if ( distance == -2) {
+					if (isCheck()) {
+						wturn = !wturn;
+						undo(false);
+						return "invalid";
+					}
+					removePiece(Coor{dest.x - 2, dest.y});
+					char after = chess + 'r' - 'k';
+					placePiece(after, Coor{dest.x + 1, dest.y});
 				}
 			}
 			
 			if (isCheck()) {
 				wturn = !wturn;
-				undo(true);
+				undo(false);
 				return "invalid";
 			}
 

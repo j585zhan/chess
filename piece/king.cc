@@ -58,26 +58,6 @@ vector<Coor> King::getAttackRange() {
 		attackRange.emplace_back(oneMove);
 	}
 
-	//casting
-		//un move
-	if (!board->isMove(coor) && coor.x+3 < 8 && !board->isMove(Coor{coor.x + 3, coor.y})) {
-		//have gap
-		if (board->isEmpty(coor.x + 2, coor.y) &&
-			board->isEmpty(coor.x + 1, coor.y)) {
-			Coor oneMove = {coor.x + 2, coor.y};
-			attackRange.emplace_back(oneMove);
-		}
-	}
-
-	if (!board->isMove(coor) && coor.x-4 >= 0 && !board->isMove(Coor{coor.x - 4, coor.y})) {
-		//have gap
-		if (board->isEmpty(coor.x - 3, coor.y) &&
-			board->isEmpty(coor.x - 2, coor.y) &&
-			board->isEmpty(coor.x - 1, coor.y)) {
-			Coor oneMove = {coor.x - 2, coor.y};
-			attackRange.emplace_back(oneMove);
-		}
-	}
 	return attackRange;
 }
 
@@ -115,7 +95,27 @@ vector<Coor> King::getMoveRange() {
 		Coor oneMove = {coor.x, coor.y - 1};
 		moveRange.emplace_back(oneMove);
 	}
+	
+	//casting
+		//un move
+	if (!board->isMove(coor) && coor.x+3 < 8 && !board->isMove(Coor{coor.x + 3, coor.y})) {
+		//have gap
+		if (board->isEmpty(coor.x + 2, coor.y) &&
+			board->isEmpty(coor.x + 1, coor.y)) {
+			Coor oneMove = {coor.x + 2, coor.y};
+			moveRange.emplace_back(oneMove);
+		}
+	}
 
+	if (!board->isMove(coor) && coor.x-4 >= 0 && !board->isMove(Coor{coor.x - 4, coor.y})) {
+		//have gap
+		if (board->isEmpty(coor.x - 3, coor.y) &&
+			board->isEmpty(coor.x - 2, coor.y) &&
+			board->isEmpty(coor.x - 1, coor.y)) {
+			Coor oneMove = {coor.x - 2, coor.y};
+			moveRange.emplace_back(oneMove);
+		}
+	}
 	return moveRange;
 }
 
