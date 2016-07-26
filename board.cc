@@ -215,6 +215,47 @@ void Board::undo(bool inter) {
 
 
 void Board::initBoard(){
+	if (theChessBoard.size() != 0) {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				shared_ptr<ChessPiece> cp;
+				int chessColor;
+				if (j <= 3) {
+					chessColor = 0;
+				} else {
+					chessColor = 1;
+				}
+
+				if (j == 0 || j == 7) {
+					if (i == 0 || i == 7) {
+						cp = std::make_shared<Rook>(chessColor, Coor{i, j}, this);
+					} else if (i == 1 || i == 6) {
+						cp = std::make_shared<Knight>(chessColor, Coor{i, j}, this);
+					} else if (i == 2 || i == 5) {
+						cp = std::make_shared<Bishop>(chessColor, Coor{i, j}, this);
+					} else if (i == 3) {
+						cp = std::make_shared<Queen>(chessColor, Coor{i, j}, this);
+					} else{
+						cp = std::make_shared<King>(chessColor, Coor{i, j}, this);
+					}
+				} else if (j == 1 || j == 6) {
+					cp = std::make_shared<Pawn>(chessColor, Coor{i, j}, this);
+				} else {
+					cp = nullptr;
+					notifyView('E', Coor{i, j});
+					continue;
+				}
+				char chess = cp->getType();
+				if (chessColor == 1) {
+					chess -= ('A' - 'a');
+				}
+				notifyView(chess, Coor{i, j});
+				theChessBoard[i][j] = cp;
+			}
+		}
+		history.emplace_back(theChessBoard);
+	}
+
 	for (int i = 0; i < 8; i++) {
 		vector<shared_ptr<ChessPiece>> theLine;
 		for (int j = 0; j < 8; j++) {
