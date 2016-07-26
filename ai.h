@@ -4,6 +4,7 @@
 
 class ChessPiece;
 class Board;
+class Coor;
 
 class AI {
   int level;
@@ -19,6 +20,7 @@ public:
   int moveLevel3();
   int moveLevel4();
   int value(ChessPiece *p);
+  bool inOppoARange(Coor c);
 };
 
 #endif

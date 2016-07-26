@@ -187,8 +187,8 @@ void Controller::game() {
 				board->wturn = !board->wturn;
 			} else {
 				board->undo(false);
-				board->print();
 			}
+			board->print();
 		} else if (!cin.eof()) {
 			cout << "Invalid move command" << endl;
 		}

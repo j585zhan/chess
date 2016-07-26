@@ -524,9 +524,11 @@ void Board::setPlayer(const string &p1, const string &p2) {
 
 
 bool Board::castling(Coor start, Coor dest) {
-	if (theChessBoard[dest.x][dest.y]->getType() == 'K' &&
+	auto pPiece = theChessBoard[dest.x][dest.y];
+	if (!pPiece) return false;
+	if (pPiece->getType() == 'K' &&
 		dest.y == start.y &&
-		(dest.x + 2 == start.x) || (dest.x - 2 == start.x)) {
+		(dest.x + 2 == start.x || dest.x - 2 == start.x)) {
 		return true;
 	}
 	return false;

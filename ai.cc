@@ -120,6 +120,7 @@ int AI::moveLevel3() {
 		if (pPiece->getColor() != color) continue;
 		auto moveR = pPiece->getMoveRange();
 		auto attackR = pPiece->getAttackRange();
+		vector<Coor> allMoves;
 		allMoves.reserve(moveR.size() + attackR.size());
 		allMoves.insert(allMoves.end(), attackR.begin(), attackR.end());
 		allMoves.insert(allMoves.end(), moveR.begin(), moveR.end());		
@@ -132,17 +133,18 @@ int AI::moveLevel3() {
 				else return 444;
 			} else continue;
 		}
-	return 3;
+	}
+	return moveLevel2();
 }
 
-bool inOppoARange(Coor c) {
+bool AI::inOppoARange(Coor c) {
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {
 			auto pPiece = board->theChessBoard[i][j];
 			if (!pPiece) continue;
 			if (pPiece->getColor() == color) continue;
-			for (auto t : pPiece->attackRange()) {
-				if (t == c) return true;
+			for (auto t : pPiece->getAttackRange()) {
+				if (t.x == c.x && t.y == c.y) return true;
 			}
 		}
 	}
