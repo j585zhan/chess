@@ -54,6 +54,7 @@ public:
 
   bool validBoard();
   bool needPromotion();
+  Coor AIneedPromotion(int color);
   void promote(char type);
   bool isStalemate();
   void setPlayer(const std::string &p1, const std::string &p2);

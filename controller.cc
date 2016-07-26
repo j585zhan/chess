@@ -120,10 +120,18 @@ void Controller::game() {
 			// check if it is AI
 			if (board->wturn && board->aiW) {
 				cout << board->aiW->makeMove() << endl;
+				if (board->needPromotion()) {
+					board->placePiece('Q', board->AIneedPromotion(0));
+				}
 				board->print();
+				printTurn(board->wturn);
 			} else if (!board->wturn && board->aiB) {
 				cout << board->aiB->makeMove() << endl;
+				if (board->needPromotion()) {
+					board->placePiece('q', board->AIneedPromotion(1));
+				}
 				board->print();
+				printTurn(board->wturn);
 			} else {
 				cin >> start >> dest;
 				if (validPos(start) && validPos(dest)) {

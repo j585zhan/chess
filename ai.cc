@@ -27,8 +27,6 @@ int AI::makeMove() {
 	}
 }
 
-void AI::openingMove() {}
-
 int AI::moveLevel1() {
 	// Create a vector of number from 1 to 64
 	vector<int> pos;
@@ -105,6 +103,31 @@ int AI::moveLevel2() {
 	return moveLevel1();
 }
 int AI::moveLevel3() {
+	//Check if any piece is under attack
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 8; ++j) {
+			auto pPiece = board->theChessBoard[i][j];
+			if (!pPiece) continue;
+			if (pPiece->getColor() != color) continue;
+			if (inOppoARange(Coor {i, j})) {
+				vector<Coor> allMoves;
+				auto moveR = pPiece->getMoveRange();
+				auto attackR = pPiece->getAttackRange();
+				allMoves.reserve(moveR.size() + attackR.size());
+				allMoves.insert(allMoves.end(), attackR.begin(), attackR.end());
+				allMoves.insert(allMoves.end(), moveR.begin(), moveR.end());
+				for (auto trial : allMoves) {
+					string status = board->makeMove(pPiece->getCoor(), trial);
+					if (status == "") {
+						if (inOppoARange(pPiece->getCoor())) board->undo(false);
+						else return 222;
+					} else continue;
+
+				}
+			}
+		}
+	}
+
 	vector<int> pos;
 	for (int i = 0; i < 64; ++i) {
 		pos.emplace_back(i);
@@ -151,5 +174,15 @@ bool AI::inOppoARange(Coor c) {
 	return false;
 }
 
-int AI::moveLevel4() {return 4;}
-int AI::value(ChessPiece *p) {return 1;}
+int AI::moveLevel4() {
+
+}
+
+int AI::value(ChessPiece *p) {
+	if (p->getType() == 'P') return 1;
+	if (p->getType() == 'B') return 3;
+	if (p->getType() == 'N') return 3;
+	if (p->getType() == 'R') return 5;
+	if (p->getType() == 'Q') return 9;
+	if (p->getType() == 'K') return 1000;z`
+}

@@ -533,3 +533,18 @@ bool Board::castling(Coor start, Coor dest) {
 	}
 	return false;
 }
+
+Coor Board::AIneedPromotion(int color) {
+	for (int i = 0; i < 8; ++i) {
+		auto pBottomPiece = theChessBoard[i][0];
+		auto pTopPiece = theChessBoard[i][7];
+		if (pBottomPiece != nullptr && pBottomPiece->getType() == 'P' 
+			&& pBottomPiece->getColor() == color) {
+			return Coor{i, 0};
+		} else if (pTopPiece != nullptr && pTopPiece->getType() == 'P' 
+			&& pTopPiece->getColor() == color) {
+			return Coor{i, 7};
+		}
+	}
+	return Coor{8,8};
+}

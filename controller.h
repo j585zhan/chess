@@ -10,7 +10,6 @@ class Controller {
 	std::shared_ptr<Board> board;
 	bool presetBoard;
 	
-	
 	bool validPlayer(const std::string &player);
 	bool validPiece(const std::string &piece);
 	bool validPos(const std::string &pos);
@@ -19,6 +18,7 @@ class Controller {
 	void setup(std::istream &is, bool showStep);
 	void game();
 	std::string getPromotion();
+	
 public:
 	Controller();
 	~Controller();

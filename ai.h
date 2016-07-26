@@ -14,7 +14,6 @@ public:
   AI(int level, int color, Board *board);
   ~AI();
   int makeMove();
-  void openingMove();
   int moveLevel1();
   int moveLevel2();
   int moveLevel3();
