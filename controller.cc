@@ -49,7 +49,6 @@ Coor Controller::toCoor(const string &pos) {
 	return c;
 }
 
-
 void Controller::setup(istream &is, bool showStep) {
 	presetBoard = true;
 	board->initBoard();

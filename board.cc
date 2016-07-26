@@ -214,7 +214,7 @@ void Board::undo(bool inter) {
 }
 
 
-void Board::initBoard(){
+void Board::initBoard(){ 
 	for (int i = 0; i < 8; i++) {
 		vector<shared_ptr<ChessPiece>> theLine;
 		for (int j = 0; j < 8; j++) {
@@ -272,10 +272,12 @@ int Board::resign() {
 	if (wturn) {
 		scoreUpdate(1, 1);
 		wturn = true;
+		clearBoard();
 		return 0;
 	}
 	scoreUpdate(0, 1);
 	wturn = true;
+	clearBoard();
 	return 1; 
 }
 
@@ -382,7 +384,6 @@ string Board::makeMove(Coor start, Coor dest) {
 			}
 			#endif
 
-			history.emplace_back(theChessBoard);
 
 			if (chess == 'p' || chess == 'P') {
 				if (distance != 0 && height != 0) {
@@ -391,6 +392,8 @@ string Board::makeMove(Coor start, Coor dest) {
 					notifyView('E', Coor{Arange[i].x,(start.y+dest.y)/2});
 				}
 			}
+
+			history.emplace_back(theChessBoard);
 
 			if (isCheck()) {
 				wturn = !wturn;
