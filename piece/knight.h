@@ -11,6 +11,8 @@ public:
   void makeMove(Coor dest);
   vector<Coor> getAttackRange();
   vector<Coor> getMoveRange();
+  bool getEp(){ return false;}
+  void closeEp(){}
   char getType();
 };
 

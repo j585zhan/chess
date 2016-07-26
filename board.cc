@@ -314,6 +314,17 @@ void Board::removePiece(Coor pos) {
 }
 
 string Board::makeMove(Coor start, Coor dest) {
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			auto pc = theChessBoard[i][j];
+			if (!pc) continue;
+			if ((pc->getColor() == 0 && wturn) ||
+				(pc->getColor() == 1 && !wturn)) {
+				if (pc && pc->getType() == 'P')
+				theChessBoard[i][j]->closeEp();
+			}
+		}
+	}
 	#ifdef DEBUG
 	int size = 8;
 	for (int i = size - 1; i >= 0; --i) {
@@ -345,13 +356,16 @@ string Board::makeMove(Coor start, Coor dest) {
 	vector<Coor> Mrange = theChessBoard[start.x][start.y]->getMoveRange();
 	for (int i = 0; i < Arange.size(); i++) {
 		if (Arange[i].x == dest.x && Arange[i].y == dest.y) {
+			int distance = dest.x - start.x;
+			int height = dest.y - start.y;
+			char chess = theChessBoard[start.x][start.y]->getType();
+			
+
 			theChessBoard[dest.x][dest.y] = nullptr;
 			using std::swap;
 			swap(theChessBoard[start.x][start.y], theChessBoard[dest.x][dest.y]);
 			theChessBoard[dest.x][dest.y]->makeMove(dest);
 			notifyView('E', start);
-
-			char chess = theChessBoard[dest.x][dest.y]->getType();
 			if (theChessBoard[dest.x][dest.y]->getColor() == 1) {
 				chess -= ('A' - 'a');
 			}
@@ -369,6 +383,14 @@ string Board::makeMove(Coor start, Coor dest) {
 			#endif
 
 			history.emplace_back(theChessBoard);
+
+			if (chess == 'p' || chess == 'P') {
+				if (distance != 0 && height != 0) {
+					//cout<<chess<<": "<<Arange[i].x<<", "<<(start.y+dest.y)/2<<endl;
+					theChessBoard[Arange[i].x][(start.y+dest.y)/2] = nullptr;
+					notifyView('E', Coor{Arange[i].x,(start.y+dest.y)/2});
+				}
+			}
 
 			if (isCheck()) {
 				wturn = !wturn;

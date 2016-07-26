@@ -18,6 +18,8 @@ public:
   virtual vector<Coor> getAttackRange() = 0;
   virtual vector<Coor> getMoveRange() = 0;
   virtual char getType() = 0;
+  virtual bool getEp() = 0;
+  virtual void closeEp() = 0;
   Coor getCoor();
   int getColor();
 };
