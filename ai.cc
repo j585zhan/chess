@@ -175,7 +175,7 @@ bool AI::inOppoARange(Coor c) {
 }
 
 int AI::moveLevel4() {
-
+ return 4;
 }
 
 int AI::value(ChessPiece *p) {
@@ -184,5 +184,6 @@ int AI::value(ChessPiece *p) {
 	if (p->getType() == 'N') return 3;
 	if (p->getType() == 'R') return 5;
 	if (p->getType() == 'Q') return 9;
-	if (p->getType() == 'K') return 1000;z`
+	if (p->getType() == 'K') return 1000;
+	else return 0;
 }
