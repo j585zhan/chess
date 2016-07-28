@@ -118,14 +118,14 @@ void Controller::game() {
 		if (cmd == "move") {
 			// check if it is AI
 			if (board->wturn && board->aiW) {
-				cout << board->aiW->makeMove() << endl;
+				board->aiW->makeMove();
 				if (board->needPromotion()) {
 					board->placePiece('Q', board->AIneedPromotion(0));
 				}
 				board->print();
 				printTurn(board->wturn);
 			} else if (!board->wturn && board->aiB) {
-				cout << board->aiB->makeMove() << endl;
+				board->aiB->makeMove();
 				if (board->needPromotion()) {
 					board->placePiece('q', board->AIneedPromotion(1));
 				}
@@ -210,6 +210,8 @@ void Controller::game() {
 		}
 		if (board->isStalemate()) {
 			cout << "Stalemate!" << endl;
+			board->scoreUpdate(0, 0.5);
+			board->scoreUpdate(1, 0.5);
 			break;
 		}
 		if (board->isCheck()) {

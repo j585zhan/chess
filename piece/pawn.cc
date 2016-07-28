@@ -41,6 +41,7 @@ vector<Coor> Pawn::getAttackRange() {
 			Coor oneMove = {coor.x - 1, coor.y + 1};
 			attackRange.emplace_back(oneMove);
 		}
+		// fuck
 		if (coor.y + 1 < 8 && coor.x - 1 >= 0 && board->isEmpty(coor.x - 1, coor.y + 1) &&
 			!board->isEmpty(coor.x - 1, coor.y) && board->getPos(Coor{coor.x - 1, coor.y})->getEp()) {
 			Coor oneMove = {coor.x - 1, coor.y + 1};
@@ -68,7 +69,7 @@ vector<Coor> Pawn::getAttackRange() {
 			Coor oneMove = {coor.x + 1, coor.y - 1};
 			attackRange.emplace_back(oneMove);
 		}
-		if (coor.y - 1 <= 0 && coor.x - 1 <= 0 && board->isEmpty(coor.x - 1, coor.y - 1) &&
+		if (coor.y - 1 >= 0 && coor.x - 1 >= 0 && board->isEmpty(coor.x - 1, coor.y - 1) &&
 			!board->isEmpty(coor.x - 1, coor.y) && board->getPos(Coor{coor.x - 1, coor.y})->getEp()) {
 			Coor oneMove = {coor.x - 1, coor.y - 1};
 			attackRange.emplace_back(oneMove);

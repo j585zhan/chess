@@ -424,7 +424,7 @@ string Board::makeMove(Coor start, Coor dest) {
 			}
 			#endif
 
-
+			// fuck
 			if (chess == 'p' || chess == 'P') {
 				if (distance != 0 && height != 0) {
 					//cout<<chess<<": "<<Arange[i].x<<", "<<(start.y+dest.y)/2<<endl;
@@ -432,7 +432,7 @@ string Board::makeMove(Coor start, Coor dest) {
 					notifyView('E', Coor{Arange[i].x,(start.y+dest.y)/2});
 				}
 			}
-
+			// end fuck
 			history.emplace_back(theChessBoard);
 
 			if (isCheck()) {

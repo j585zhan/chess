@@ -1,0 +1,5 @@
+Bonus features:
+unlimited undo chances
+using smart pointers
+chesspiece and board with Unicode representation, which looks like this 
+♔ ♕ ♖ ♗ ♘ ♙ ♚ ♛ ♜ ♝ ♞ ♟

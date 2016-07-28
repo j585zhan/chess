@@ -11,4 +11,3 @@ Coor ChessPiece::getCoor() {
 }
 
 ChessPiece::~ChessPiece() {}
-
